@@ -1,0 +1,22 @@
+{
+  "name": "gget",
+  "version": "1.0.0",
+  "description": "Universal expression language for querying JSON objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Jan Zak <zj@zakjan.cz>",
+  "license": "MIT",
+  "dependencies": {
+    "antlr4ts": "^0.5.0-alpha.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.7",
+    "antlr4ts-cli": "^0.5.0-alpha.3",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  }
+}

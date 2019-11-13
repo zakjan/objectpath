@@ -1,0 +1,24 @@
+{
+    "data": {
+        "array": [1, 2, 3],
+        "object": {
+            "string": "Oook."
+        }
+    },
+    "testCases": [
+        ["unknown", null],
+        ["$.unknown", null],
+        ["@.unknown", null],
+        ["array.unknown", null],
+        ["object.unknown", null],
+        ["array[0", null],
+        ["array[999]", null],
+        ["-unknown", null],
+        ["array[0] * unknown", null],
+        ["array[0] + unknown", null],
+        ["array[0] < unknown", null],
+        ["object.filter(string)", null],
+        ["object.map(string)", null],
+        ["join(unknown, ' ')", null]
+    ]
+}

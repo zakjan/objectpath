@@ -1,0 +1,12 @@
+{
+    "data": {
+        "strings": ["A", "B", "C"],
+        "numbers": [1, 2, 3]
+    },
+    "testCases": [
+        ["join(strings, ' ')", "A B C"],
+        ["split('A B C', ' ')", ["A", "B", "C"]],
+        ["split('A B C', ' ')[0]", "A"],
+        ["sum(numbers)", 6]
+    ]
+}

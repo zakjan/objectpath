@@ -3,6 +3,8 @@ export class GetByPathVisitorFunctions {
         ["join", GetByPathVisitorFunctions.joinFunction],
         ["split", GetByPathVisitorFunctions.splitFunction],
         ["sum", GetByPathVisitorFunctions.sumFunction],
+        ["timestampToIsoString", GetByPathVisitorFunctions.timestampToIsoStringFunction],
+        ["isoStringToTimestamp", GetByPathVisitorFunctions.isoStringToTimestampFunction],
     ]);
 
     public static callFunction(name: string, args: unknown[]): unknown {
@@ -75,5 +77,35 @@ export class GetByPathVisitorFunctions {
 
         const result = filteredValues.reduce((sum, x) => sum + x, 0);
         return result;
+    }
+
+    private static timestampToIsoStringFunction(args: unknown[]): unknown {
+        /* istanbul ignore if */
+        if (args.length !== 1) {
+            return null;
+        }
+
+        const value = args[0];
+        /* istanbul ignore if */
+        if (typeof value !== "number") {
+            return null;
+        }
+
+        return new Date(value).toISOString();
+    }
+
+    private static isoStringToTimestampFunction(args: unknown[]): unknown {
+        /* istanbul ignore if */
+        if (args.length !== 1) {
+            return null;
+        }
+
+        const value = args[0];
+        /* istanbul ignore if */
+        if (typeof value !== "string") {
+            return null;
+        }
+
+        return Date.parse(value).valueOf();
     }
 }

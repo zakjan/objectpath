@@ -262,7 +262,11 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
     }
 
     private Object evaluateNumber(Object data, ObjectPathParser.NumberContext ctx) {
-        return Integer.parseInt(ctx.NUMBER().getText());
+        try {
+            return Integer.parseInt(ctx.NUMBER().getText());
+        } catch (NumberFormatException e) {
+            return Long.parseLong(ctx.NUMBER().getText());
+        }
     }
 
     private Object evaluateBoolean(Object data, ObjectPathParser.BooleanContext ctx) {

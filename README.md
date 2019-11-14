@@ -26,6 +26,12 @@ Supported features:
     `array.map(field)`<br>
     `array.map(@ * 2)`
   - leading object reference can be omitted, defaults to current object `@`
+- custom functions<br>
+  `join`<br>
+  `split`<br>
+  `sum`<br>
+  `timestampToIsoString`<br>
+  `isoStringToTimestamp`
 - operators (by priority)
   - unary - `+` `-`
   - unary logical NOT - `!`
@@ -61,6 +67,7 @@ In case of non-existing property, `null` is returned. This is because `undefined
 **TODO**
 
 - publish to package managers (npm, Maven)
+- more input/output datetime formats
 - array slicing
 - explore if also AST visitor can be generated from an universal language
 

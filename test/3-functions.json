@@ -7,6 +7,8 @@
         ["join(strings, ' ')", "A B C"],
         ["split('A B C', ' ')", ["A", "B", "C"]],
         ["split('A B C', ' ')[0]", "A"],
-        ["sum(numbers)", 6]
+        ["sum(numbers)", 6],
+        ["timestampToIsoString(1546344000000)", "2019-01-01T12:00:00.000Z"],
+        ["isoStringToTimestamp('2019-01-01T12:00:00.000Z')", 1546344000000]
     ]
 }

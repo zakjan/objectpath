@@ -1,8 +1,14 @@
 package cz.zakjan.gget.visitor;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -11,6 +17,8 @@ public class GetByPathVisitorFunctions {
         put("join", GetByPathVisitorFunctions::joinFunction);
         put("split", GetByPathVisitorFunctions::splitFunction);
         put("sum", GetByPathVisitorFunctions::sumFunction);
+        put("timestampToIsoString", GetByPathVisitorFunctions::timestampToIsoStringFunction);
+        put("isoStringToTimestamp", GetByPathVisitorFunctions::isoStringToTimestampFunction);
     }};
 
     public static Object callFunction(String name, List<Object> args) {
@@ -74,5 +82,46 @@ public class GetByPathVisitorFunctions {
 
         Integer result = filteredValues.stream().reduce(0, (sum, x) -> sum + x);
         return result;
+    }
+
+    private static Object timestampToIsoStringFunction(List<Object> args) {
+        if (args.size() != 1) {
+            return null;
+        }
+
+        Object value = args.get(0);
+        if (!(value instanceof Long)) {
+            return null;
+        }
+
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+
+        Date date = new Date((Long)value);
+        return df.format(date);
+    }
+
+    private static Object isoStringToTimestampFunction(List<Object> args) {
+        if (args.size() != 1) {
+            return null;
+        }
+
+        Object value = args.get(0);
+        if (!(value instanceof String)) {
+            return null;
+        }
+
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+
+        Date date;
+        try {
+            date = df.parse((String)value);
+        } catch (ParseException e) {
+            return null;
+        }
+        return date.getTime();
     }
 }

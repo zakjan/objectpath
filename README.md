@@ -54,7 +54,7 @@ In case of parsing errors, function `getByPath` silently catches the error and r
 
 **Boolean truth table**
 
-`false`, `null`, `undefined` evaluates to `false`, everything else evaluates to `true`. This differs from JS, which evaluates `0`, `''` also to `true`.
+`false`, `null`, `undefined` evaluates to `false`, everything else evaluates to `true`. This differs from JS, which evaluates `0`, `''` also to `false`.
 
 **Strict equality**
 

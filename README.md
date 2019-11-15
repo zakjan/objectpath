@@ -15,9 +15,9 @@ Supported features:
   - property access<br>
     `object.field`
   - index access<br>
-    `object['field']`<br>
     `array[0]`<br>
-    `array[-1]`
+    `array[-1]`<br>
+    `object['a field']`
   - array filter<br>
     `array.filter(field == 'X')`<br>
     `array.filter($.rootField == 'X')`<br>
@@ -25,7 +25,12 @@ Supported features:
   - array map<br>
     `array.map(field)`<br>
     `array.map(@ * 2)`
-  - leading object reference can be omitted, defaults to current object `@`
+  - leading object reference can be omitted, defaults to current object `@`<br>
+    `field`<br>
+    `[0]`<br>
+    `['a field']`<br>
+    `filter(field == 'X')`<br>
+    `map(field)`
 - custom functions<br>
   `join`<br>
   `split`<br>
@@ -85,7 +90,7 @@ Other libraries are either missing more advanced extracting features or don't ha
 
 - too different from JS syntax
 
-**lodash.get, JSPath, dot-prop**
+**lodash.get, JSONata, JSPath, dot-prop**
 
 - missing more advanced features
 
@@ -124,12 +129,12 @@ alias grun='java -cp ".:/usr/local/lib/antlr-4.7.2-complete.jar:$CLASSPATH" org.
 
 When updating ANTLR4 grammar, run `./generate-parser.sh` to generate parsers in all target languages. **Don't edit parsers manually!** Then update AST visitors in each language respectively.
 
-For visualizing AST, ANTLR IntelliJ plugin is recommended. Open `ObjectPath.g4`, right-click `start` rule, select "Test ANTLR rule", enter the input string into the left window, observe parse tree in the right window.
+For visualizing AST, ANTLR IntelliJ plugin is recommended. Open `grammar/ObjectPath.g4`, right-click `start` rule, select "Test ANTLR rule", enter the input string into the left window, observe parse tree in the right window.
 
 ![ANTLR IntelliJ plugin - start](docs/antlr-intellij-plugin-start.png)
 ![ANTLR IntelliJ plugin - result](docs/antlr-intellij-plugin-result.png)
 
-*The other option is `grun` tool. But it doesn't support grammar file and compiled Java files in separate directories, you'd need to disable `-package` option and output the parser to the same directory with grammar in Java `generate-parser.sh`.*
+*The other option is `grun` tool. But it doesn't support grammar file and compiled Java files in separate directories, you'd need to disable `-package` option and output the parser to the same directory with grammar in `gget-java/generate-parser.sh`.*
 
 **Updating AST visitor**
 

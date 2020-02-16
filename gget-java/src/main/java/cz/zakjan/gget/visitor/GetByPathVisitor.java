@@ -30,10 +30,10 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
             return this.evaluateRootObject(data, (ObjectPathParser.RootObjectContext)ctx);
         } else if (ctx instanceof ObjectPathParser.CurrentObjectContext) {
             return this.evaluateCurrentObject(data, (ObjectPathParser.CurrentObjectContext)ctx);
-        } else if (ctx instanceof ObjectPathParser.PropertyAccessContext) {
-            return this.evaluatePropertyAccess(data, (ObjectPathParser.PropertyAccessContext)ctx);
-        } else if (ctx instanceof ObjectPathParser.IndexAccessContext) {
-            return this.evaluateIndexAccess(data, (ObjectPathParser.IndexAccessContext)ctx);
+        } else if (ctx instanceof ObjectPathParser.DotAccessContext) {
+            return this.evaluateDotAccess(data, (ObjectPathParser.DotAccessContext)ctx);
+        } else if (ctx instanceof ObjectPathParser.BracketAccessContext) {
+            return this.evaluateBracketAccess(data, (ObjectPathParser.BracketAccessContext)ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayFilterContext) {
             return this.evaluateArrayFilter(data, (ObjectPathParser.ArrayFilterContext)ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayMapContext) {
@@ -56,8 +56,8 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
             return this.evaluateLogicalAnd(data, (ObjectPathParser.LogicalAndContext)ctx);
         } else if (ctx instanceof ObjectPathParser.LogicalOrContext) {
             return this.evaluateLogicalOr(data, (ObjectPathParser.LogicalOrContext)ctx);
-        } else if (ctx instanceof ObjectPathParser.TernaryContext) {
-            return this.evaluateTernary(data, (ObjectPathParser.TernaryContext)ctx);
+        } else if (ctx instanceof ObjectPathParser.ConditionalContext) {
+            return this.evaluateConditional(data, (ObjectPathParser.ConditionalContext)ctx);
         } else if (ctx instanceof ObjectPathParser.StringContext) {
             return this.evaluateString(data, (ObjectPathParser.StringContext)ctx);
         } else if (ctx instanceof ObjectPathParser.NumberContext) {
@@ -83,7 +83,7 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
         return data;
     }
 
-    private Object evaluatePropertyAccess(Object data, ObjectPathParser.PropertyAccessContext ctx) {
+    private Object evaluateDotAccess(Object data, ObjectPathParser.DotAccessContext ctx) {
         Object value = ctx.expr1 != null ? this.evaluateExpression(data, ctx.expr1) : data;
         String property = ctx.IDENTIFIER().getText();
 
@@ -93,7 +93,7 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
         return null;
     }
 
-    private Object evaluateIndexAccess(Object data, ObjectPathParser.IndexAccessContext ctx) {
+    private Object evaluateBracketAccess(Object data, ObjectPathParser.BracketAccessContext ctx) {
         Object value = ctx.expr1 != null ? this.evaluateExpression(data, ctx.expr1) : data;
         Object index = this.evaluateExpression(data, ctx.expr2);
 
@@ -128,15 +128,6 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
             }).collect(Collectors.toList());
         }
         return null;
-    }
-
-    private Object evaluateFunction(Object data, ObjectPathParser.FunctionContext ctx) {
-        String identifier = ctx.IDENTIFIER().getText();
-        List<Object> args = ctx.expression().stream().map(ctx2 -> {
-            return this.evaluateExpression(data, ctx2);
-        }).collect(Collectors.toList());
-
-        return GetByPathVisitorFunctions.callFunction(identifier, args);
     }
 
     private Object evaluateUnary(Object data, ObjectPathParser.UnaryContext ctx) {
@@ -249,12 +240,21 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
         return this.toBoolean(left) == true ? left : right;
     }
 
-    private Object evaluateTernary(Object data, ObjectPathParser.TernaryContext ctx) {
+    private Object evaluateConditional(Object data, ObjectPathParser.ConditionalContext ctx) {
         Object condition = this.evaluateExpression(data, ctx.expression().get(0));
         Object pass = this.evaluateExpression(data, ctx.expression().get(1));
         Object fail = this.evaluateExpression(data, ctx.expression().get(2));
 
         return this.toBoolean(condition) == true ? pass : fail;
+    }
+
+    private Object evaluateFunction(Object data, ObjectPathParser.FunctionContext ctx) {
+        String identifier = ctx.IDENTIFIER().getText();
+        List<Object> args = ctx.expression().stream().map(ctx2 -> {
+            return this.evaluateExpression(data, ctx2);
+        }).collect(Collectors.toList());
+
+        return GetByPathVisitorFunctions.callFunction(identifier, args);
     }
 
     private Object evaluateString(Object data, ObjectPathParser.StringContext ctx) {

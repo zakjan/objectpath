@@ -11,10 +11,16 @@ Supported features:
 - root / current object references
   - root object - `$`
   - current object - `@`
+    - leading object reference can be omitted, defaults to current object `@`<br>
+      `field`<br>
+      `[0]`<br>
+      `['a field']`<br>
+      `filter(field == 'X')`<br>
+      `map(field)`
 - access expressions
-  - property access<br>
+  - dot access<br>
     `object.field`
-  - index access<br>
+  - bracket access<br>
     `array[0]`<br>
     `array[-1]`<br>
     `object['a field']`
@@ -25,18 +31,6 @@ Supported features:
   - array map<br>
     `array.map(field)`<br>
     `array.map(@ * 2)`
-  - leading object reference can be omitted, defaults to current object `@`<br>
-    `field`<br>
-    `[0]`<br>
-    `['a field']`<br>
-    `filter(field == 'X')`<br>
-    `map(field)`
-- custom functions<br>
-  `join`<br>
-  `split`<br>
-  `sum`<br>
-  `dateTimestampToIsoString` (returns date ISO string `YYYY-MM-DD'T'HH:mm:ss.SSSX`)<br>
-  `dateIsoStringToTimestamp` (accepts any valid date ISO string)
 - operators (by priority)
   - unary - `+` `-`
   - unary logical NOT - `!`
@@ -46,7 +40,13 @@ Supported features:
   - relational - `<` `>` `<=` `>=`
   - logical AND - `&&`
   - logical OR - `||`
-  - ternary - `?:`
+  - conditional - `?:`
+- custom functions<br>
+  `join`<br>
+  `split`<br>
+  `sum`<br>
+  `dateTimestampToIsoString` (returns date ISO string `YYYY-MM-DD'T'HH:mm:ss.SSSX`)<br>
+  `dateIsoStringToTimestamp` (accepts any valid date ISO string)
 - primitives - string, number, boolean, null
 
 Logical operators can be used with operands that are not boolean values: `falseField || trueField` returns `trueField`
@@ -87,7 +87,12 @@ Other libraries are either missing more advanced extracting features or don't ha
 
 **XPath**
 
+- *(blocker)* language-specific implementations are completely separate
 - too different from JS syntax
+
+**SpEL**
+
+- *(blocker)* language-specific implementations are completely separate
 
 **lodash.get, JSONata, JSPath, dot-prop**
 

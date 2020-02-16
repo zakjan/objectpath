@@ -9,16 +9,14 @@ expression : '(' expression ')' # Parentheses
            | '$' # RootObject
            | '@' # CurrentObject
 
-           | IDENTIFIER # PropertyAccess // shorthand for expr1 = @
-           | expr1=expression '.' IDENTIFIER # PropertyAccess
-           | '[' expr2=expression ']' # IndexAccess // shorthand for expr1 = @
-           | expr1=expression '[' expr2=expression ']' # IndexAccess
+           | IDENTIFIER # DotAccess // shorthand for expr1 = @
+           | expr1=expression '.' IDENTIFIER # DotAccess
+           | '[' expr2=expression ']' # BracketAccess // shorthand for expr1 = @
+           | expr1=expression '[' expr2=expression ']' # BracketAccess
            | 'filter(' expr2=expression ')' # ArrayFilter // shorthand for expr1 = @
            | expr1=expression '.' 'filter(' expr2=expression ')' # ArrayFilter
            | 'map(' expr2=expression ')' # ArrayMap // shorthand for expr1 = @
            | expr1=expression '.' 'map(' expr2=expression ')' # ArrayMap
-
-           | IDENTIFIER '(' ((expression ',')* expression)? ')' # Function
 
            // operators (by priority)
            | op=('+'|'-') expression # Unary
@@ -29,7 +27,10 @@ expression : '(' expression ')' # Parentheses
            | expression op=('=='|'!=') expression # Equality
            | expression '&&' expression # LogicalAnd
            | expression '||' expression # LogicalOr
-           | <assoc=right> expression '?' expression ':' expression # Ternary
+           | <assoc=right> expression '?' expression ':' expression # Conditional
+
+           // functions
+           | IDENTIFIER '(' ((expression ',')* expression)? ')' # Function
 
            // primitives
            | STRING # String

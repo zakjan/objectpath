@@ -24,6 +24,13 @@ public interface ObjectPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayFilter(ObjectPathParser.ArrayFilterContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code DotAccess}
+	 * labeled alternative in {@link ObjectPathParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDotAccess(ObjectPathParser.DotAccessContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Null}
 	 * labeled alternative in {@link ObjectPathParser#expression}.
 	 * @param ctx the parse tree
@@ -37,20 +44,6 @@ public interface ObjectPathVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnaryLogicalNot(ObjectPathParser.UnaryLogicalNotContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Ternary}
-	 * labeled alternative in {@link ObjectPathParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTernary(ObjectPathParser.TernaryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code IndexAccess}
-	 * labeled alternative in {@link ObjectPathParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIndexAccess(ObjectPathParser.IndexAccessContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Relational}
 	 * labeled alternative in {@link ObjectPathParser#expression}.
@@ -66,6 +59,13 @@ public interface ObjectPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayMap(ObjectPathParser.ArrayMapContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Conditional}
+	 * labeled alternative in {@link ObjectPathParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConditional(ObjectPathParser.ConditionalContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code String}
 	 * labeled alternative in {@link ObjectPathParser#expression}.
 	 * @param ctx the parse tree
@@ -80,6 +80,13 @@ public interface ObjectPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRootObject(ObjectPathParser.RootObjectContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code BracketAccess}
+	 * labeled alternative in {@link ObjectPathParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBracketAccess(ObjectPathParser.BracketAccessContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Unary}
 	 * labeled alternative in {@link ObjectPathParser#expression}.
 	 * @param ctx the parse tree
@@ -93,13 +100,6 @@ public interface ObjectPathVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLogicalOr(ObjectPathParser.LogicalOrContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code PropertyAccess}
-	 * labeled alternative in {@link ObjectPathParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPropertyAccess(ObjectPathParser.PropertyAccessContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Function}
 	 * labeled alternative in {@link ObjectPathParser#expression}.

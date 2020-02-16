@@ -67,8 +67,8 @@ export class ObjectPathParser extends Parser {
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
 		undefined, "'('", "')'", "'$'", "'@'", "'.'", "'['", "']'", "'filter('", 
-		"'map('", "','", "'+'", "'-'", "'!'", "'*'", "'/'", "'<'", "'>'", "'<='", 
-		"'>='", "'=='", "'!='", "'&&'", "'||'", "'?'", "':'", undefined, undefined, 
+		"'map('", "'+'", "'-'", "'!'", "'*'", "'/'", "'<'", "'>'", "'<='", "'>='", 
+		"'=='", "'!='", "'&&'", "'||'", "'?'", "':'", "','", undefined, undefined, 
 		undefined, "'null'", undefined, "' '",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
@@ -111,7 +111,7 @@ export class ObjectPathParser extends Parser {
 			this.state = 5;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ObjectPathParser.T__0) | (1 << ObjectPathParser.T__2) | (1 << ObjectPathParser.T__3) | (1 << ObjectPathParser.T__5) | (1 << ObjectPathParser.T__7) | (1 << ObjectPathParser.T__8) | (1 << ObjectPathParser.T__10) | (1 << ObjectPathParser.T__11) | (1 << ObjectPathParser.T__12) | (1 << ObjectPathParser.STRING) | (1 << ObjectPathParser.NUMBER) | (1 << ObjectPathParser.BOOLEAN) | (1 << ObjectPathParser.NULL) | (1 << ObjectPathParser.IDENTIFIER))) !== 0)) {
+			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ObjectPathParser.T__0) | (1 << ObjectPathParser.T__2) | (1 << ObjectPathParser.T__3) | (1 << ObjectPathParser.T__5) | (1 << ObjectPathParser.T__7) | (1 << ObjectPathParser.T__8) | (1 << ObjectPathParser.T__9) | (1 << ObjectPathParser.T__10) | (1 << ObjectPathParser.T__11) | (1 << ObjectPathParser.STRING) | (1 << ObjectPathParser.NUMBER) | (1 << ObjectPathParser.BOOLEAN) | (1 << ObjectPathParser.NULL) | (1 << ObjectPathParser.IDENTIFIER))) !== 0)) {
 				{
 				this.state = 4;
 				this.expression(0);
@@ -196,7 +196,7 @@ export class ObjectPathParser extends Parser {
 
 			case 4:
 				{
-				_localctx = new PropertyAccessContext(_localctx);
+				_localctx = new DotAccessContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
 				this.state = 16;
@@ -206,13 +206,13 @@ export class ObjectPathParser extends Parser {
 
 			case 5:
 				{
-				_localctx = new IndexAccessContext(_localctx);
+				_localctx = new BracketAccessContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
 				this.state = 17;
 				this.match(ObjectPathParser.T__5);
 				this.state = 18;
-				(_localctx as IndexAccessContext)._expr2 = this.expression(0);
+				(_localctx as BracketAccessContext)._expr2 = this.expression(0);
 				this.state = 19;
 				this.match(ObjectPathParser.T__6);
 				}
@@ -248,55 +248,13 @@ export class ObjectPathParser extends Parser {
 
 			case 8:
 				{
-				_localctx = new FunctionContext(_localctx);
-				this._ctx = _localctx;
-				_prevctx = _localctx;
-				this.state = 29;
-				this.match(ObjectPathParser.IDENTIFIER);
-				this.state = 30;
-				this.match(ObjectPathParser.T__0);
-				this.state = 40;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ObjectPathParser.T__0) | (1 << ObjectPathParser.T__2) | (1 << ObjectPathParser.T__3) | (1 << ObjectPathParser.T__5) | (1 << ObjectPathParser.T__7) | (1 << ObjectPathParser.T__8) | (1 << ObjectPathParser.T__10) | (1 << ObjectPathParser.T__11) | (1 << ObjectPathParser.T__12) | (1 << ObjectPathParser.STRING) | (1 << ObjectPathParser.NUMBER) | (1 << ObjectPathParser.BOOLEAN) | (1 << ObjectPathParser.NULL) | (1 << ObjectPathParser.IDENTIFIER))) !== 0)) {
-					{
-					this.state = 36;
-					this._errHandler.sync(this);
-					_alt = this.interpreter.adaptivePredict(this._input, 1, this._ctx);
-					while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
-						if (_alt === 1) {
-							{
-							{
-							this.state = 31;
-							this.expression(0);
-							this.state = 32;
-							this.match(ObjectPathParser.T__9);
-							}
-							}
-						}
-						this.state = 38;
-						this._errHandler.sync(this);
-						_alt = this.interpreter.adaptivePredict(this._input, 1, this._ctx);
-					}
-					this.state = 39;
-					this.expression(0);
-					}
-				}
-
-				this.state = 42;
-				this.match(ObjectPathParser.T__1);
-				}
-				break;
-
-			case 9:
-				{
 				_localctx = new UnaryContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 43;
+				this.state = 29;
 				(_localctx as UnaryContext)._op = this._input.LT(1);
 				_la = this._input.LA(1);
-				if (!(_la === ObjectPathParser.T__10 || _la === ObjectPathParser.T__11)) {
+				if (!(_la === ObjectPathParser.T__9 || _la === ObjectPathParser.T__10)) {
 					(_localctx as UnaryContext)._op = this._errHandler.recoverInline(this);
 				} else {
 					if (this._input.LA(1) === Token.EOF) {
@@ -306,20 +264,62 @@ export class ObjectPathParser extends Parser {
 					this._errHandler.reportMatch(this);
 					this.consume();
 				}
-				this.state = 44;
+				this.state = 30;
+				this.expression(14);
+				}
+				break;
+
+			case 9:
+				{
+				_localctx = new UnaryLogicalNotContext(_localctx);
+				this._ctx = _localctx;
+				_prevctx = _localctx;
+				this.state = 31;
+				this.match(ObjectPathParser.T__11);
+				this.state = 32;
 				this.expression(13);
 				}
 				break;
 
 			case 10:
 				{
-				_localctx = new UnaryLogicalNotContext(_localctx);
+				_localctx = new FunctionContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 45;
-				this.match(ObjectPathParser.T__12);
+				this.state = 33;
+				this.match(ObjectPathParser.IDENTIFIER);
+				this.state = 34;
+				this.match(ObjectPathParser.T__0);
+				this.state = 44;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ObjectPathParser.T__0) | (1 << ObjectPathParser.T__2) | (1 << ObjectPathParser.T__3) | (1 << ObjectPathParser.T__5) | (1 << ObjectPathParser.T__7) | (1 << ObjectPathParser.T__8) | (1 << ObjectPathParser.T__9) | (1 << ObjectPathParser.T__10) | (1 << ObjectPathParser.T__11) | (1 << ObjectPathParser.STRING) | (1 << ObjectPathParser.NUMBER) | (1 << ObjectPathParser.BOOLEAN) | (1 << ObjectPathParser.NULL) | (1 << ObjectPathParser.IDENTIFIER))) !== 0)) {
+					{
+					this.state = 40;
+					this._errHandler.sync(this);
+					_alt = this.interpreter.adaptivePredict(this._input, 1, this._ctx);
+					while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+						if (_alt === 1) {
+							{
+							{
+							this.state = 35;
+							this.expression(0);
+							this.state = 36;
+							this.match(ObjectPathParser.T__24);
+							}
+							}
+						}
+						this.state = 42;
+						this._errHandler.sync(this);
+						_alt = this.interpreter.adaptivePredict(this._input, 1, this._ctx);
+					}
+					this.state = 43;
+					this.expression(0);
+					}
+				}
+
 				this.state = 46;
-				this.expression(12);
+				this.match(ObjectPathParser.T__1);
 				}
 				break;
 
@@ -382,13 +382,13 @@ export class ObjectPathParser extends Parser {
 						_localctx = new MultiplicativeContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 53;
-						if (!(this.precpred(this._ctx, 11))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 11)");
+						if (!(this.precpred(this._ctx, 12))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 12)");
 						}
 						this.state = 54;
 						(_localctx as MultiplicativeContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!(_la === ObjectPathParser.T__13 || _la === ObjectPathParser.T__14)) {
+						if (!(_la === ObjectPathParser.T__12 || _la === ObjectPathParser.T__13)) {
 							(_localctx as MultiplicativeContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -399,7 +399,7 @@ export class ObjectPathParser extends Parser {
 							this.consume();
 						}
 						this.state = 55;
-						this.expression(12);
+						this.expression(13);
 						}
 						break;
 
@@ -408,13 +408,13 @@ export class ObjectPathParser extends Parser {
 						_localctx = new AdditiveContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 56;
-						if (!(this.precpred(this._ctx, 10))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 10)");
+						if (!(this.precpred(this._ctx, 11))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 11)");
 						}
 						this.state = 57;
 						(_localctx as AdditiveContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!(_la === ObjectPathParser.T__10 || _la === ObjectPathParser.T__11)) {
+						if (!(_la === ObjectPathParser.T__9 || _la === ObjectPathParser.T__10)) {
 							(_localctx as AdditiveContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -425,7 +425,7 @@ export class ObjectPathParser extends Parser {
 							this.consume();
 						}
 						this.state = 58;
-						this.expression(11);
+						this.expression(12);
 						}
 						break;
 
@@ -434,13 +434,13 @@ export class ObjectPathParser extends Parser {
 						_localctx = new RelationalContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 59;
-						if (!(this.precpred(this._ctx, 9))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 9)");
+						if (!(this.precpred(this._ctx, 10))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 10)");
 						}
 						this.state = 60;
 						(_localctx as RelationalContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ObjectPathParser.T__15) | (1 << ObjectPathParser.T__16) | (1 << ObjectPathParser.T__17) | (1 << ObjectPathParser.T__18))) !== 0))) {
+						if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ObjectPathParser.T__14) | (1 << ObjectPathParser.T__15) | (1 << ObjectPathParser.T__16) | (1 << ObjectPathParser.T__17))) !== 0))) {
 							(_localctx as RelationalContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -451,7 +451,7 @@ export class ObjectPathParser extends Parser {
 							this.consume();
 						}
 						this.state = 61;
-						this.expression(10);
+						this.expression(11);
 						}
 						break;
 
@@ -460,13 +460,13 @@ export class ObjectPathParser extends Parser {
 						_localctx = new EqualityContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 62;
-						if (!(this.precpred(this._ctx, 8))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 8)");
+						if (!(this.precpred(this._ctx, 9))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 9)");
 						}
 						this.state = 63;
 						(_localctx as EqualityContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!(_la === ObjectPathParser.T__19 || _la === ObjectPathParser.T__20)) {
+						if (!(_la === ObjectPathParser.T__18 || _la === ObjectPathParser.T__19)) {
 							(_localctx as EqualityContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -477,7 +477,7 @@ export class ObjectPathParser extends Parser {
 							this.consume();
 						}
 						this.state = 64;
-						this.expression(9);
+						this.expression(10);
 						}
 						break;
 
@@ -486,13 +486,13 @@ export class ObjectPathParser extends Parser {
 						_localctx = new LogicalAndContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 65;
-						if (!(this.precpred(this._ctx, 7))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 7)");
+						if (!(this.precpred(this._ctx, 8))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 8)");
 						}
 						this.state = 66;
-						this.match(ObjectPathParser.T__21);
+						this.match(ObjectPathParser.T__20);
 						this.state = 67;
-						this.expression(8);
+						this.expression(9);
 						}
 						break;
 
@@ -501,39 +501,39 @@ export class ObjectPathParser extends Parser {
 						_localctx = new LogicalOrContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 68;
-						if (!(this.precpred(this._ctx, 6))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 6)");
+						if (!(this.precpred(this._ctx, 7))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 7)");
 						}
 						this.state = 69;
-						this.match(ObjectPathParser.T__22);
+						this.match(ObjectPathParser.T__21);
 						this.state = 70;
-						this.expression(7);
+						this.expression(8);
 						}
 						break;
 
 					case 7:
 						{
-						_localctx = new TernaryContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new ConditionalContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 71;
-						if (!(this.precpred(this._ctx, 5))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 5)");
+						if (!(this.precpred(this._ctx, 6))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 6)");
 						}
 						this.state = 72;
-						this.match(ObjectPathParser.T__23);
+						this.match(ObjectPathParser.T__22);
 						this.state = 73;
 						this.expression(0);
 						this.state = 74;
-						this.match(ObjectPathParser.T__24);
+						this.match(ObjectPathParser.T__23);
 						this.state = 75;
-						this.expression(5);
+						this.expression(6);
 						}
 						break;
 
 					case 8:
 						{
-						_localctx = new PropertyAccessContext(new ExpressionContext(_parentctx, _parentState));
-						(_localctx as PropertyAccessContext)._expr1 = _prevctx;
+						_localctx = new DotAccessContext(new ExpressionContext(_parentctx, _parentState));
+						(_localctx as DotAccessContext)._expr1 = _prevctx;
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 77;
 						if (!(this.precpred(this._ctx, 21))) {
@@ -548,8 +548,8 @@ export class ObjectPathParser extends Parser {
 
 					case 9:
 						{
-						_localctx = new IndexAccessContext(new ExpressionContext(_parentctx, _parentState));
-						(_localctx as IndexAccessContext)._expr1 = _prevctx;
+						_localctx = new BracketAccessContext(new ExpressionContext(_parentctx, _parentState));
+						(_localctx as BracketAccessContext)._expr1 = _prevctx;
 						this.pushNewRecursionContext(_localctx, _startState, ObjectPathParser.RULE_expression);
 						this.state = 80;
 						if (!(this.precpred(this._ctx, 19))) {
@@ -558,7 +558,7 @@ export class ObjectPathParser extends Parser {
 						this.state = 81;
 						this.match(ObjectPathParser.T__5);
 						this.state = 82;
-						(_localctx as IndexAccessContext)._expr2 = this.expression(0);
+						(_localctx as BracketAccessContext)._expr2 = this.expression(0);
 						this.state = 83;
 						this.match(ObjectPathParser.T__6);
 						}
@@ -637,25 +637,25 @@ export class ObjectPathParser extends Parser {
 	private expression_sempred(_localctx: ExpressionContext, predIndex: number): boolean {
 		switch (predIndex) {
 		case 0:
-			return this.precpred(this._ctx, 11);
+			return this.precpred(this._ctx, 12);
 
 		case 1:
-			return this.precpred(this._ctx, 10);
+			return this.precpred(this._ctx, 11);
 
 		case 2:
-			return this.precpred(this._ctx, 9);
+			return this.precpred(this._ctx, 10);
 
 		case 3:
-			return this.precpred(this._ctx, 8);
+			return this.precpred(this._ctx, 9);
 
 		case 4:
-			return this.precpred(this._ctx, 7);
+			return this.precpred(this._ctx, 8);
 
 		case 5:
-			return this.precpred(this._ctx, 6);
+			return this.precpred(this._ctx, 7);
 
 		case 6:
-			return this.precpred(this._ctx, 5);
+			return this.precpred(this._ctx, 6);
 
 		case 7:
 			return this.precpred(this._ctx, 21);
@@ -677,50 +677,50 @@ export class ObjectPathParser extends Parser {
 		"\x04\x03\t\x03\x03\x02\x05\x02\b\n\x02\x03\x02\x03\x02\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x07\x03%\n\x03\f\x03\x0E\x03" +
-		"(\v\x03\x03\x03\x05\x03+\n\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x03\x03\x03\x03\x03\x05\x036\n\x03\x03\x03\x03\x03\x03\x03" +
+		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
+		"\x07\x03)\n\x03\f\x03\x0E\x03,\v\x03\x03\x03\x05\x03/\n\x03\x03\x03\x03" +
+		"\x03\x03\x03\x03\x03\x03\x03\x05\x036\n\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x07\x03d\n\x03\f\x03\x0E\x03" +
-		"g\v\x03\x03\x03\x02\x02\x03\x04\x04\x02\x02\x04\x02\x02\x06\x03\x02\r" +
-		"\x0E\x03\x02\x10\x11\x03\x02\x12\x15\x03\x02\x16\x17\x02\x81\x02\x07\x03" +
-		"\x02\x02\x02\x045\x03\x02\x02\x02\x06\b\x05\x04\x03\x02\x07\x06\x03\x02" +
-		"\x02\x02\x07\b\x03\x02\x02\x02\b\t\x03\x02\x02\x02\t\n\x07\x02\x02\x03" +
-		"\n\x03\x03\x02\x02\x02\v\f\b\x03\x01\x02\f\r\x07\x03\x02\x02\r\x0E\x05" +
-		"\x04\x03\x02\x0E\x0F\x07\x04\x02\x02\x0F6\x03\x02\x02\x02\x106\x07\x05" +
-		"\x02\x02\x116\x07\x06\x02\x02\x126\x07 \x02\x02\x13\x14\x07\b\x02\x02" +
-		"\x14\x15\x05\x04\x03\x02\x15\x16\x07\t\x02\x02\x166\x03\x02\x02\x02\x17" +
-		"\x18\x07\n\x02\x02\x18\x19\x05\x04\x03\x02\x19\x1A\x07\x04\x02\x02\x1A" +
-		"6\x03\x02\x02\x02\x1B\x1C\x07\v\x02\x02\x1C\x1D\x05\x04\x03\x02\x1D\x1E" +
-		"\x07\x04\x02\x02\x1E6\x03\x02\x02\x02\x1F \x07 \x02\x02 *\x07\x03\x02" +
-		"\x02!\"\x05\x04\x03\x02\"#\x07\f\x02\x02#%\x03\x02\x02\x02$!\x03\x02\x02" +
-		"\x02%(\x03\x02\x02\x02&$\x03\x02\x02\x02&\'\x03\x02\x02\x02\')\x03\x02" +
-		"\x02\x02(&\x03\x02\x02\x02)+\x05\x04\x03\x02*&\x03\x02\x02\x02*+\x03\x02" +
-		"\x02\x02+,\x03\x02\x02\x02,6\x07\x04\x02\x02-.\t\x02\x02\x02.6\x05\x04" +
-		"\x03\x0F/0\x07\x0F\x02\x0206\x05\x04\x03\x0E16\x07\x1C\x02\x0226\x07\x1D" +
-		"\x02\x0236\x07\x1E\x02\x0246\x07\x1F\x02\x025\v\x03\x02\x02\x025\x10\x03" +
-		"\x02\x02\x025\x11\x03\x02\x02\x025\x12\x03\x02\x02\x025\x13\x03\x02\x02" +
-		"\x025\x17\x03\x02\x02\x025\x1B\x03\x02\x02\x025\x1F\x03\x02\x02\x025-" +
-		"\x03\x02\x02\x025/\x03\x02\x02\x0251\x03\x02\x02\x0252\x03\x02\x02\x02" +
-		"53\x03\x02\x02\x0254\x03\x02\x02\x026e\x03\x02\x02\x0278\f\r\x02\x028" +
-		"9\t\x03\x02\x029d\x05\x04\x03\x0E:;\f\f\x02\x02;<\t\x02\x02\x02<d\x05" +
-		"\x04\x03\r=>\f\v\x02\x02>?\t\x04\x02\x02?d\x05\x04\x03\f@A\f\n\x02\x02" +
-		"AB\t\x05\x02\x02Bd\x05\x04\x03\vCD\f\t\x02\x02DE\x07\x18\x02\x02Ed\x05" +
-		"\x04\x03\nFG\f\b\x02\x02GH\x07\x19\x02\x02Hd\x05\x04\x03\tIJ\f\x07\x02" +
-		"\x02JK\x07\x1A\x02\x02KL\x05\x04\x03\x02LM\x07\x1B\x02\x02MN\x05\x04\x03" +
-		"\x07Nd\x03\x02\x02\x02OP\f\x17\x02\x02PQ\x07\x07\x02\x02Qd\x07 \x02\x02" +
-		"RS\f\x15\x02\x02ST\x07\b\x02\x02TU\x05\x04\x03\x02UV\x07\t\x02\x02Vd\x03" +
-		"\x02\x02\x02WX\f\x13\x02\x02XY\x07\x07\x02\x02YZ\x07\n\x02\x02Z[\x05\x04" +
-		"\x03\x02[\\\x07\x04\x02\x02\\d\x03\x02\x02\x02]^\f\x11\x02\x02^_\x07\x07" +
-		"\x02\x02_`\x07\v\x02\x02`a\x05\x04\x03\x02ab\x07\x04\x02\x02bd\x03\x02" +
-		"\x02\x02c7\x03\x02\x02\x02c:\x03\x02\x02\x02c=\x03\x02\x02\x02c@\x03\x02" +
-		"\x02\x02cC\x03\x02\x02\x02cF\x03\x02\x02\x02cI\x03\x02\x02\x02cO\x03\x02" +
-		"\x02\x02cR\x03\x02\x02\x02cW\x03\x02\x02\x02c]\x03\x02\x02\x02dg\x03\x02" +
-		"\x02\x02ec\x03\x02\x02\x02ef\x03\x02\x02\x02f\x05\x03\x02\x02\x02ge\x03" +
-		"\x02\x02\x02\b\x07&*5ce";
+		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x07\x03d\n\x03\f\x03\x0E\x03g\v\x03" +
+		"\x03\x03\x02\x02\x03\x04\x04\x02\x02\x04\x02\x02\x06\x03\x02\f\r\x03\x02" +
+		"\x0F\x10\x03\x02\x11\x14\x03\x02\x15\x16\x02\x81\x02\x07\x03\x02\x02\x02" +
+		"\x045\x03\x02\x02\x02\x06\b\x05\x04\x03\x02\x07\x06\x03\x02\x02\x02\x07" +
+		"\b\x03\x02\x02\x02\b\t\x03\x02\x02\x02\t\n\x07\x02\x02\x03\n\x03\x03\x02" +
+		"\x02\x02\v\f\b\x03\x01\x02\f\r\x07\x03\x02\x02\r\x0E\x05\x04\x03\x02\x0E" +
+		"\x0F\x07\x04\x02\x02\x0F6\x03\x02\x02\x02\x106\x07\x05\x02\x02\x116\x07" +
+		"\x06\x02\x02\x126\x07 \x02\x02\x13\x14\x07\b\x02\x02\x14\x15\x05\x04\x03" +
+		"\x02\x15\x16\x07\t\x02\x02\x166\x03\x02\x02\x02\x17\x18\x07\n\x02\x02" +
+		"\x18\x19\x05\x04\x03\x02\x19\x1A\x07\x04\x02\x02\x1A6\x03\x02\x02\x02" +
+		"\x1B\x1C\x07\v\x02\x02\x1C\x1D\x05\x04\x03\x02\x1D\x1E\x07\x04\x02\x02" +
+		"\x1E6\x03\x02\x02\x02\x1F \t\x02\x02\x02 6\x05\x04\x03\x10!\"\x07\x0E" +
+		"\x02\x02\"6\x05\x04\x03\x0F#$\x07 \x02\x02$.\x07\x03\x02\x02%&\x05\x04" +
+		"\x03\x02&\'\x07\x1B\x02\x02\')\x03\x02\x02\x02(%\x03\x02\x02\x02),\x03" +
+		"\x02\x02\x02*(\x03\x02\x02\x02*+\x03\x02\x02\x02+-\x03\x02\x02\x02,*\x03" +
+		"\x02\x02\x02-/\x05\x04\x03\x02.*\x03\x02\x02\x02./\x03\x02\x02\x02/0\x03" +
+		"\x02\x02\x0206\x07\x04\x02\x0216\x07\x1C\x02\x0226\x07\x1D\x02\x0236\x07" +
+		"\x1E\x02\x0246\x07\x1F\x02\x025\v\x03\x02\x02\x025\x10\x03\x02\x02\x02" +
+		"5\x11\x03\x02\x02\x025\x12\x03\x02\x02\x025\x13\x03\x02\x02\x025\x17\x03" +
+		"\x02\x02\x025\x1B\x03\x02\x02\x025\x1F\x03\x02\x02\x025!\x03\x02\x02\x02" +
+		"5#\x03\x02\x02\x0251\x03\x02\x02\x0252\x03\x02\x02\x0253\x03\x02\x02\x02" +
+		"54\x03\x02\x02\x026e\x03\x02\x02\x0278\f\x0E\x02\x0289\t\x03\x02\x029" +
+		"d\x05\x04\x03\x0F:;\f\r\x02\x02;<\t\x02\x02\x02<d\x05\x04\x03\x0E=>\f" +
+		"\f\x02\x02>?\t\x04\x02\x02?d\x05\x04\x03\r@A\f\v\x02\x02AB\t\x05\x02\x02" +
+		"Bd\x05\x04\x03\fCD\f\n\x02\x02DE\x07\x17\x02\x02Ed\x05\x04\x03\vFG\f\t" +
+		"\x02\x02GH\x07\x18\x02\x02Hd\x05\x04\x03\nIJ\f\b\x02\x02JK\x07\x19\x02" +
+		"\x02KL\x05\x04\x03\x02LM\x07\x1A\x02\x02MN\x05\x04\x03\bNd\x03\x02\x02" +
+		"\x02OP\f\x17\x02\x02PQ\x07\x07\x02\x02Qd\x07 \x02\x02RS\f\x15\x02\x02" +
+		"ST\x07\b\x02\x02TU\x05\x04\x03\x02UV\x07\t\x02\x02Vd\x03\x02\x02\x02W" +
+		"X\f\x13\x02\x02XY\x07\x07\x02\x02YZ\x07\n\x02\x02Z[\x05\x04\x03\x02[\\" +
+		"\x07\x04\x02\x02\\d\x03\x02\x02\x02]^\f\x11\x02\x02^_\x07\x07\x02\x02" +
+		"_`\x07\v\x02\x02`a\x05\x04\x03\x02ab\x07\x04\x02\x02bd\x03\x02\x02\x02" +
+		"c7\x03\x02\x02\x02c:\x03\x02\x02\x02c=\x03\x02\x02\x02c@\x03\x02\x02\x02" +
+		"cC\x03\x02\x02\x02cF\x03\x02\x02\x02cI\x03\x02\x02\x02cO\x03\x02\x02\x02" +
+		"cR\x03\x02\x02\x02cW\x03\x02\x02\x02c]\x03\x02\x02\x02dg\x03\x02\x02\x02" +
+		"ec\x03\x02\x02\x02ef\x03\x02\x02\x02f\x05\x03\x02\x02\x02ge\x03\x02\x02" +
+		"\x02\b\x07*.5ce";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!ObjectPathParser.__ATN) {
@@ -808,7 +808,7 @@ export class CurrentObjectContext extends ExpressionContext {
 		}
 	}
 }
-export class PropertyAccessContext extends ExpressionContext {
+export class DotAccessContext extends ExpressionContext {
 	public _expr1: ExpressionContext;
 	public IDENTIFIER(): TerminalNode { return this.getToken(ObjectPathParser.IDENTIFIER, 0); }
 	public expression(): ExpressionContext | undefined {
@@ -820,14 +820,14 @@ export class PropertyAccessContext extends ExpressionContext {
 	}
 	// @Override
 	public accept<Result>(visitor: ObjectPathVisitor<Result>): Result {
-		if (visitor.visitPropertyAccess) {
-			return visitor.visitPropertyAccess(this);
+		if (visitor.visitDotAccess) {
+			return visitor.visitDotAccess(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
 	}
 }
-export class IndexAccessContext extends ExpressionContext {
+export class BracketAccessContext extends ExpressionContext {
 	public _expr1: ExpressionContext;
 	public _expr2: ExpressionContext;
 	public expression(): ExpressionContext[];
@@ -845,8 +845,8 @@ export class IndexAccessContext extends ExpressionContext {
 	}
 	// @Override
 	public accept<Result>(visitor: ObjectPathVisitor<Result>): Result {
-		if (visitor.visitIndexAccess) {
-			return visitor.visitIndexAccess(this);
+		if (visitor.visitBracketAccess) {
+			return visitor.visitBracketAccess(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
@@ -897,30 +897,6 @@ export class ArrayMapContext extends ExpressionContext {
 	public accept<Result>(visitor: ObjectPathVisitor<Result>): Result {
 		if (visitor.visitArrayMap) {
 			return visitor.visitArrayMap(this);
-		} else {
-			return visitor.visitChildren(this);
-		}
-	}
-}
-export class FunctionContext extends ExpressionContext {
-	public IDENTIFIER(): TerminalNode { return this.getToken(ObjectPathParser.IDENTIFIER, 0); }
-	public expression(): ExpressionContext[];
-	public expression(i: number): ExpressionContext;
-	public expression(i?: number): ExpressionContext | ExpressionContext[] {
-		if (i === undefined) {
-			return this.getRuleContexts(ExpressionContext);
-		} else {
-			return this.getRuleContext(i, ExpressionContext);
-		}
-	}
-	constructor(ctx: ExpressionContext) {
-		super(ctx.parent, ctx.invokingState);
-		this.copyFrom(ctx);
-	}
-	// @Override
-	public accept<Result>(visitor: ObjectPathVisitor<Result>): Result {
-		if (visitor.visitFunction) {
-			return visitor.visitFunction(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
@@ -1103,7 +1079,7 @@ export class LogicalOrContext extends ExpressionContext {
 		}
 	}
 }
-export class TernaryContext extends ExpressionContext {
+export class ConditionalContext extends ExpressionContext {
 	public expression(): ExpressionContext[];
 	public expression(i: number): ExpressionContext;
 	public expression(i?: number): ExpressionContext | ExpressionContext[] {
@@ -1119,8 +1095,32 @@ export class TernaryContext extends ExpressionContext {
 	}
 	// @Override
 	public accept<Result>(visitor: ObjectPathVisitor<Result>): Result {
-		if (visitor.visitTernary) {
-			return visitor.visitTernary(this);
+		if (visitor.visitConditional) {
+			return visitor.visitConditional(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+export class FunctionContext extends ExpressionContext {
+	public IDENTIFIER(): TerminalNode { return this.getToken(ObjectPathParser.IDENTIFIER, 0); }
+	public expression(): ExpressionContext[];
+	public expression(i: number): ExpressionContext;
+	public expression(i?: number): ExpressionContext | ExpressionContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ExpressionContext);
+		} else {
+			return this.getRuleContext(i, ExpressionContext);
+		}
+	}
+	constructor(ctx: ExpressionContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public accept<Result>(visitor: ObjectPathVisitor<Result>): Result {
+		if (visitor.visitFunction) {
+			return visitor.visitFunction(this);
 		} else {
 			return visitor.visitChildren(this);
 		}

@@ -22,10 +22,10 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             return this.evaluateRootObject(data, ctx);
         } else if (ctx instanceof ObjectPathParser.CurrentObjectContext) {
             return this.evaluateCurrentObject(data, ctx);
-        } else if (ctx instanceof ObjectPathParser.PropertyAccessContext) {
-            return this.evaluatePropertyAccess(data, ctx);
-        } else if (ctx instanceof ObjectPathParser.IndexAccessContext) {
-            return this.evaluateIndexAccess(data, ctx);
+        } else if (ctx instanceof ObjectPathParser.DotAccessContext) {
+            return this.evaluateDotAccess(data, ctx);
+        } else if (ctx instanceof ObjectPathParser.BracketAccessContext) {
+            return this.evaluateBracketAccess(data, ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayFilterContext) {
             return this.evaluateArrayFilter(data, ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayMapContext) {
@@ -48,8 +48,8 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             return this.evaluateLogicalAnd(data, ctx);
         } else if (ctx instanceof ObjectPathParser.LogicalOrContext) {
             return this.evaluateLogicalOr(data, ctx);
-        } else if (ctx instanceof ObjectPathParser.TernaryContext) {
-            return this.evaluateTernary(data, ctx);
+        } else if (ctx instanceof ObjectPathParser.ConditionalContext) {
+            return this.evaluateConditional(data, ctx);
         } else if (ctx instanceof ObjectPathParser.StringContext) {
             return this.evaluateString(data, ctx);
         } else if (ctx instanceof ObjectPathParser.NumberContext) {
@@ -76,7 +76,7 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
         return data;
     }
 
-    private evaluatePropertyAccess(data: unknown, ctx: ObjectPathParser.PropertyAccessContext): unknown {
+    private evaluateDotAccess(data: unknown, ctx: ObjectPathParser.DotAccessContext): unknown {
         const value = ctx._expr1 ? this.evaluateExpression(data, ctx._expr1) : data;
         const property = ctx.IDENTIFIER().text;
 
@@ -86,7 +86,7 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
         return null;
     }
 
-    private evaluateIndexAccess(data: unknown, ctx: ObjectPathParser.IndexAccessContext): unknown {
+    private evaluateBracketAccess(data: unknown, ctx: ObjectPathParser.BracketAccessContext): unknown {
         const value = ctx._expr1 ? this.evaluateExpression(data, ctx._expr1) : data;
         const index = this.evaluateExpression(data, ctx._expr2);
 
@@ -121,15 +121,6 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             });
         }
         return null;
-    }
-
-    private evaluateFunction(data: unknown, ctx: ObjectPathParser.FunctionContext): unknown {
-        const identifier = ctx.IDENTIFIER().text;
-        const args = ctx.expression().map(ctx2 => {
-            return this.evaluateExpression(data, ctx2);
-        });
-
-        return GetByPathVisitorFunctions.callFunction(identifier, args);
     }
 
     private evaluateUnary(data: unknown, ctx: ObjectPathParser.UnaryContext): unknown {
@@ -248,12 +239,21 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
         return this.toBoolean(left) === true ? left : right;
     }
 
-    private evaluateTernary(data: unknown, ctx: ObjectPathParser.TernaryContext): unknown {
+    private evaluateConditional(data: unknown, ctx: ObjectPathParser.ConditionalContext): unknown {
         const condition = this.evaluateExpression(data, ctx.expression()[0]);
         const pass = this.evaluateExpression(data, ctx.expression()[1]);
         const fail = this.evaluateExpression(data, ctx.expression()[2]);
 
         return this.toBoolean(condition) === true ? pass : fail;
+    }
+
+    private evaluateFunction(data: unknown, ctx: ObjectPathParser.FunctionContext): unknown {
+        const identifier = ctx.IDENTIFIER().text;
+        const args = ctx.expression().map(ctx2 => {
+            return this.evaluateExpression(data, ctx2);
+        });
+
+        return GetByPathVisitorFunctions.callFunction(identifier, args);
     }
 
     private evaluateString(_data: unknown, ctx: ObjectPathParser.StringContext): unknown {

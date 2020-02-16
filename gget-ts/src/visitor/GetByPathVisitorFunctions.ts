@@ -3,8 +3,8 @@ export class GetByPathVisitorFunctions {
         ["join", GetByPathVisitorFunctions.joinFunction],
         ["split", GetByPathVisitorFunctions.splitFunction],
         ["sum", GetByPathVisitorFunctions.sumFunction],
-        ["timestampToIsoString", GetByPathVisitorFunctions.timestampToIsoStringFunction],
-        ["isoStringToTimestamp", GetByPathVisitorFunctions.isoStringToTimestampFunction],
+        ["dateTimestampToIsoString", GetByPathVisitorFunctions.dateTimestampToIsoStringFunction],
+        ["dateIsoStringToTimestamp", GetByPathVisitorFunctions.dateIsoStringToTimestampFunction],
     ]);
 
     public static callFunction(name: string, args: unknown[]): unknown {
@@ -79,7 +79,7 @@ export class GetByPathVisitorFunctions {
         return result;
     }
 
-    private static timestampToIsoStringFunction(args: unknown[]): unknown {
+    private static dateTimestampToIsoStringFunction(args: unknown[]): unknown {
         /* istanbul ignore if */
         if (args.length !== 1) {
             return null;
@@ -94,7 +94,7 @@ export class GetByPathVisitorFunctions {
         return new Date(value).toISOString();
     }
 
-    private static isoStringToTimestampFunction(args: unknown[]): unknown {
+    private static dateIsoStringToTimestampFunction(args: unknown[]): unknown {
         /* istanbul ignore if */
         if (args.length !== 1) {
             return null;

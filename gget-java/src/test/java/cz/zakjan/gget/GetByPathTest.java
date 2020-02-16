@@ -1,7 +1,6 @@
 package cz.zakjan.gget;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,6 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static cz.zakjan.gget.GetByPath.getByPath;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetByPathTest {
     private static final String TEST_COMMON_PATH = "../test";
@@ -43,6 +43,6 @@ public class GetByPathTest {
     @MethodSource("testCases")
     public void testGetByPath(String path, Object data, Object expected) {
         Object result = getByPath(data, path);
-        Assertions.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 }

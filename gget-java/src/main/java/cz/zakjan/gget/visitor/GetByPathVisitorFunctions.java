@@ -1,14 +1,14 @@
 package cz.zakjan.gget.visitor;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -17,8 +17,8 @@ public class GetByPathVisitorFunctions {
         put("join", GetByPathVisitorFunctions::joinFunction);
         put("split", GetByPathVisitorFunctions::splitFunction);
         put("sum", GetByPathVisitorFunctions::sumFunction);
-        put("timestampToIsoString", GetByPathVisitorFunctions::timestampToIsoStringFunction);
-        put("isoStringToTimestamp", GetByPathVisitorFunctions::isoStringToTimestampFunction);
+        put("dateTimestampToIsoString", GetByPathVisitorFunctions::dateTimestampToIsoStringFunction);
+        put("dateIsoStringToTimestamp", GetByPathVisitorFunctions::dateIsoStringToTimestampFunction);
     }};
 
     public static Object callFunction(String name, List<Object> args) {
@@ -84,7 +84,7 @@ public class GetByPathVisitorFunctions {
         return result;
     }
 
-    private static Object timestampToIsoStringFunction(List<Object> args) {
+    private static Object dateTimestampToIsoStringFunction(List<Object> args) {
         if (args.size() != 1) {
             return null;
         }
@@ -94,15 +94,11 @@ public class GetByPathVisitorFunctions {
             return null;
         }
 
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        df.setTimeZone(tz);
-
-        Date date = new Date((Long)value);
-        return df.format(date);
+        OffsetDateTime dateTime = OffsetDateTime.ofInstant(Instant.ofEpochMilli((Long)value), ZoneOffset.UTC);
+        return dateTime.format(DateTimeFormatter.ofPattern("YYYY-MM-DD'T'HH:mm:ss.SSSX"));
     }
 
-    private static Object isoStringToTimestampFunction(List<Object> args) {
+    private static Object dateIsoStringToTimestampFunction(List<Object> args) {
         if (args.size() != 1) {
             return null;
         }
@@ -112,16 +108,11 @@ public class GetByPathVisitorFunctions {
             return null;
         }
 
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        df.setTimeZone(tz);
-
-        Date date;
         try {
-            date = df.parse((String)value);
-        } catch (ParseException e) {
+            OffsetDateTime dateTime = OffsetDateTime.parse((String)value, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            return dateTime.toInstant().toEpochMilli();
+        } catch (DateTimeParseException e) {
             return null;
         }
-        return date.getTime();
     }
 }

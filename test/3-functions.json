@@ -8,7 +8,12 @@
         ["split('A B C', ' ')", ["A", "B", "C"]],
         ["split('A B C', ' ')[0]", "A"],
         ["sum(numbers)", 6],
-        ["timestampToIsoString(1546344000000)", "2019-01-01T12:00:00.000Z"],
-        ["isoStringToTimestamp('2019-01-01T12:00:00.000Z')", 1546344000000]
+        ["dateTimestampToIsoString(1546344000000)", "2019-01-01T12:00:00.000Z"],
+        ["dateIsoStringToTimestamp('2019-01-01T12:00:00Z')", 1546344000000],
+        ["dateIsoStringToTimestamp('2019-01-01T12:00:00.000Z')", 1546344000000],
+        ["dateIsoStringToTimestamp('2019-01-01T12:00:00+00:00')", 1546344000000],
+        ["dateIsoStringToTimestamp('2019-01-01T12:00:00.000+00:00')", 1546344000000],
+        ["dateIsoStringToTimestamp('2019-01-01T14:00:00+02:00')", 1546344000000],
+        ["dateIsoStringToTimestamp('2019-01-01T14:00:00.000+02:00')", 1546344000000]
     ]
 }

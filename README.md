@@ -35,8 +35,8 @@ Supported features:
   `join`<br>
   `split`<br>
   `sum`<br>
-  `timestampToIsoString`<br>
-  `isoStringToTimestamp`
+  `dateTimestampToIsoString` (returns date ISO string `YYYY-MM-DD'T'HH:mm:ss.SSSX`)<br>
+  `dateIsoStringToTimestamp` (accepts any valid date ISO string)
 - operators (by priority)
   - unary - `+` `-`
   - unary logical NOT - `!`
@@ -72,7 +72,6 @@ In case of non-existing property, `null` is returned. This is because `undefined
 **TODO**
 
 - publish to package managers (npm, Maven)
-- more input/output datetime formats
 - array slicing
 - explore if also AST visitor can be generated from an universal language
 

@@ -1,6 +1,7 @@
 *.iml
 .idea
 .vscode
+java
 .project
 .settings
 .classpath

@@ -1,4 +1,4 @@
-import { AbstractParseTreeVisitor } from "antlr4ts/tree";
+import { AbstractParseTreeVisitor } from "antlr4ts/tree/AbstractParseTreeVisitor";
 import { ObjectPathVisitor } from "./ObjectPathVisitor";
 
 export class ObjectPathBaseVisitor<Result> extends AbstractParseTreeVisitor<Result | undefined> implements ObjectPathVisitor<Result | undefined> {

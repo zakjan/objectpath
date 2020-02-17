@@ -1,4 +1,6 @@
-import { BailErrorStrategy, CharStreams, CommonTokenStream } from "antlr4ts";
+import { BailErrorStrategy } from "antlr4ts/BailErrorStrategy";
+import { CharStreams } from "antlr4ts/CharStreams";
+import { CommonTokenStream } from "antlr4ts/CommonTokenStream";
 import { ObjectPathParser } from "./parser/ObjectPathParser";
 import { ObjectPathLexer } from "./parser/ObjectPathLexer";
 import { GetByPathVisitor } from "./visitor/GetByPathVisitor";

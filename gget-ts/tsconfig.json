@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
-    "lib": ["dom", "esnext"],
+    "module": "es2015",
+    "lib": ["dom", "es2019"],
+    "moduleResolution": "node",
     "strict": true,
     "strictPropertyInitialization": false,
     "esModuleInterop": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "declaration": true,
+    "outDir": "dist"
   }
 }

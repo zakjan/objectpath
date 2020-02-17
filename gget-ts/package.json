@@ -2,9 +2,11 @@
   "name": "gget",
   "version": "1.0.0",
   "description": "Universal expression language for querying JSON objects",
-  "main": "index.js",
+  "main": "dist/GetByPath.js",
   "scripts": {
-    "test": "jest"
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
   },
   "author": "Jan Zak <zj@zakjan.cz>",
   "license": "MIT",

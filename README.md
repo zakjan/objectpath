@@ -1,6 +1,6 @@
 # gget
 
-Universal expression language for querying JSON objects. Based on formal ANTLR4 grammar, it can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TS, Java
+Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TS, Java
 
 ## Syntax
 

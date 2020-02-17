@@ -4,8 +4,8 @@
   <groupId>cz.zakjan</groupId>
   <artifactId>gget</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <description>Universal expression language for querying JSON objects</description>
+  <version>0.0.1-SNAPSHOT</version>
+  <description>Expression language for querying JSON objects, based on formal ANTLR4 grammar</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>

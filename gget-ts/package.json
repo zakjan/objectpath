@@ -1,7 +1,7 @@
 {
-  "name": "gget",
-  "version": "1.0.0",
-  "description": "Universal expression language for querying JSON objects",
+  "name": "@zakjan/gget",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "Expression language for querying JSON objects, based on formal ANTLR4 grammar",
   "main": "dist/GetByPath.js",
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",

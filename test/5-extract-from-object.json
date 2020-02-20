@@ -11,10 +11,12 @@
         "deepArray": [[[[[{ "number": 1001, "string": "AAAA", "array": [1002, 1003, 1004] }]]]]],
         "deepObjectArray": [{ "type": "X" }, { "type": "Y", "number": 10001, "objectArray": [{ "type": "X" }, { "type": "Y", "number": 10002 }] }],
         "$STRING": "B",
-        "abc 123 . () [] {} <>": "C",
-        "true": "D",
-        "false": "E",
-        "null": "F"
+        "a field": "C",
+        "a.field": "D",
+        "abc 123 . () [] {} <>": "E",
+        "true": "F",
+        "false": "G",
+        "null": "H"
     },
     "testCases": [
         ["number", 1],
@@ -82,9 +84,11 @@
         ["objectArray.filter(type == 'Y')[0].string + objectArray.filter(type == 'Y')[1].string", "AABAAC"],
         ["$STRING", "B"],
         ["['$STRING']", "B"],
-        ["['abc 123 . () [] {} <>']", "C"],
-        ["['true']", "D"],
-        ["['false']", "E"],
-        ["['null']", "F"]
+        ["['a field']", "C"],
+        ["['a.field']", "D"],
+        ["['abc 123 . () [] {} <>']", "E"],
+        ["['true']", "F"],
+        ["['false']", "G"],
+        ["['null']", "H"]
     ]
 }

@@ -6,8 +6,8 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "test": "jest",
-    "prepublishOnly": "npm run build && cp -r ../README.md ../docs .",
-    "postpublish": "rm -r README.md docs"
+    "prepublishOnly": "npm run build && cp -r ../README.md ../LICENSE ../docs .",
+    "postpublish": "rm -r README.md LICENSE docs"
   },
   "author": "Jan Zak <zj@zakjan.cz>",
   "license": "MIT",

@@ -57,6 +57,14 @@ See detailed examples in [test](test) directory.
 
 In case of parsing errors, function `getByPath` silently catches the error and returns `null`. If you wish to handle the error on your own, call `parsePath` and `getByParsedPath` separately.
 
+**Optional chaining**
+
+Some programming languages have optional chaining operator `?.`. This is the default and only mode of operation of this library by design.
+
+**Null vs. undefined**
+
+In case of non-existing property, `null` is returned. This is because `undefined` is a JS-only construct, it even can't be stored in JSON.
+
 **Boolean truth table**
 
 `false`, `null`, `undefined` evaluates to `false`, everything else evaluates to `true`. This differs from JS, which evaluates `0`, `''` also to `false`.
@@ -65,16 +73,6 @@ In case of parsing errors, function `getByPath` silently catches the error and r
 
 Equality operator `==` uses strict equality, `===` in JS, `Object.equals` in Java.
 
-**Null vs. undefined**
-
-In case of non-existing property, `null` is returned. This is because `undefined` is a JS-only construct, it even can't be stored in JSON.
-
-**TODO**
-
-- publish to package managers (npm, Maven)
-- array slicing
-- explore if also AST visitor can be generated from an universal language
-
 ## Why yet another library?
 
 Other libraries are either missing more advanced extracting features or don't have consistent implementation across multiple languages.
@@ -82,17 +80,17 @@ Other libraries are either missing more advanced extracting features or don't ha
 **JSONPath**
 
 - *(blocker)* doesn't use array filter result as context for further traversing, see https://github.com/json-path/JsonPath/issues/272
-- *(blocker)* language-specific implementations are completely separate, they differ slightly in edge cases
-- requires unintuitive `$.` in begining
+- *(blocker)* language-specific implementations are completely separate, they differ slightly in edge cases and path preprocessing is needed to make it behave consistently
+- requires root reference `$.` in begining
 
 **XPath**
 
-- *(blocker)* language-specific implementations are completely separate
+- language-specific implementations are completely separate
 - too different from JS syntax
 
 **SpEL**
 
-- *(blocker)* language-specific implementations are completely separate
+- language-specific implementations are completely separate
 
 **lodash.get, JSONata, JSPath, dot-prop**
 
@@ -143,3 +141,8 @@ For visualizing AST, ANTLR IntelliJ plugin is recommended. Open `grammar/ObjectP
 **Updating AST visitor**
 
 When updating AST visitor (`GetByPath.*`, `GetByPathVisitor.*`, `GetByPathVisitorFunctions.*`), keep them as close as possible in all languages. Although this might lead to code that is not idiomatic to the given language, it allows straightforward porting of new features.
+
+## TODO
+
+- array slicing
+- explore if also AST visitor can be generated from an universal language

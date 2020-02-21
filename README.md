@@ -148,8 +148,9 @@ When updating ANTLR4 grammar, run `./generate-parser.sh` to generate parsers in 
 
 For visualizing AST, ANTLR IntelliJ plugin is recommended. Open `grammar/ObjectPath.g4`, right-click `start` rule, select "Test ANTLR rule", enter the input string into the left window, observe parse tree in the right window.
 
-![ANTLR IntelliJ plugin - start](docs/antlr-intellij-plugin-start.png)
-![ANTLR IntelliJ plugin - result](docs/antlr-intellij-plugin-result.png)
+<img src="docs/antlr-intellij-plugin-start.png" alt="ANTLR IntelliJ plugin - start">
+
+<img src="docs/antlr-intellij-plugin-result.png" alt="ANTLR IntelliJ plugin - result">
 
 *The other option is `grun` tool. But it doesn't support grammar file and compiled Java files in separate directories, you'd need to disable `-package` option and output the parser to the same directory with grammar in `objectpath-java/generate-parser.sh`.*
 

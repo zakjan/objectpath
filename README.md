@@ -159,8 +159,9 @@ When updating AST visitor (`GetByPath.*`, `GetByPathVisitor.*`, `GetByPathVisito
 
 ## TODO
 
-- array slicing `[start:end:step]`
+- array slicing `array[start:end:step]`
 - computed member access `object[path]`
 - short circuiting - don't evaluate right side of operators if left side is enough
 - complete operator precedence table - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence), [Java](https://introcs.cs.princeton.edu/java/11precedence/)
+- enable adding custom functions
 - explore if also AST visitor can be generated from an universal language

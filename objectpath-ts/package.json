@@ -1,6 +1,6 @@
 {
   "name": "@zakjan/objectpath",
-  "version": "0.0.3-SNAPSHOT",
+  "version": "0.0.4-SNAPSHOT",
   "description": "Expression language for querying JSON objects, based on formal ANTLR4 grammar",
   "main": "dist/GetByPath.js",
   "scripts": {

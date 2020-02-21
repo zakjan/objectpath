@@ -1,14 +1,24 @@
 # objectpath
 
-Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TypeScript, Java
+Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TypeScript, Java.
 
 ## Usage
 
 ### JavaScript
 
 ```
-npm install @zakjan/objectpath`
+npm install @zakjan/objectpath
 ```
+
+```
+import { getByPath } from '@zakjan/objectpath';
+
+const result = getByPath(object, path);
+```
+
+### Java
+
+TODO
 
 ## Syntax
 
@@ -50,13 +60,25 @@ Supported features (by priority):
   - conditional `?:`
 - primitives - string, number, boolean, `null`
 
-Logical operators coerce left operand to boolean, e.g. `falseField || trueField` returns `trueField`. Note this is different from nullish coalescing operator, which applies if left side evaluates to `null` only, not other falsey values.
-
 See detailed examples in [test](test) directory.
 
 **Parsing errors**
 
 In case of parsing errors, function `getByPath` silently catches the error and returns `null`. If you wish to handle the error on your own, call `parsePath` and `getByParsedPath` separately.
+
+**Strict equality**
+
+Equality operator `==` uses strict equality, `===` in JS, `Object.equals` in Java.
+
+**Strict boolean truth table**
+
+`false`, `null` evaluates to `false`, everything else evaluates to `true`. This differs from JS, which evaluates `0`, `''` also to `false`.
+
+**Logical operators on non-boolean operands**
+
+In case of logical operator applied to non-boolean operands, left operand is coerced to boolean for condition check, and the original value of left or right operand is returned. For example `falseField || field` returns `field`.
+
+Note that nullish coalescing operator `??` is different from logical OR `||`, it applies only if left side evaluates to `null`.
 
 **Optional chaining**
 
@@ -65,14 +87,6 @@ Some programming languages have optional chaining operator `?.`. This is the def
 **Null vs. undefined**
 
 In case of non-existing property, `null` is returned. This is because `undefined` is a JS-only construct, it even can't be stored in JSON.
-
-**Boolean truth table**
-
-`false`, `null`, `undefined` evaluates to `false`, everything else evaluates to `true`. This differs from JS, which evaluates `0`, `''` also to `false`.
-
-**Strict equality**
-
-Equality operator `==` uses strict equality, `===` in JS, `Object.equals` in Java.
 
 ## Why yet another library?
 

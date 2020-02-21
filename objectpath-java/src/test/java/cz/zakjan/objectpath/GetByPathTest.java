@@ -1,7 +1,7 @@
 package cz.zakjan.objectpath;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import static cz.zakjan.objectpath.GetByPath.getByPath;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GetByPathTest {
     private static final String TEST_COMMON_PATH = "../test";
 
@@ -38,10 +39,25 @@ public class GetByPathTest {
         }
     }
 
-    @DisplayName("getByPath")
+    @Test
+    @DisplayName("simple")
+    @Order(0)
+    public void simple() {
+        Object data = new HashMap<String, List<String>>() {{
+            put("A", new ArrayList<String>() {{
+                add("B");
+            }});
+        }};
+        String path = "A[0]";
+        Object expected = "B";
+        Object result = getByPath(data, path);
+        assertEquals(expected, result);
+    }
+
     @ParameterizedTest(name = "path = \"{0}\"")
+    @DisplayName("common")
     @MethodSource("testCases")
-    public void testGetByPath(String path, Object data, Object expected) {
+    public void common(String path, Object data, Object expected) {
         Object result = getByPath(data, path);
         assertEquals(expected, result);
     }

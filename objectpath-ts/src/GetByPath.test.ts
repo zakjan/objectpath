@@ -10,8 +10,18 @@ describe("getByPath", () => {
         return fixture.testCases.map((testCase: [string, unknown]) => [testCase[0], fixture.data, testCase[1]]);
     });
 
-    it.each(testCases)("path = \"%s\"", (path, data, expectedResult) => {
+    it("simple", () => {
+        const data = { A: ["B"] };
+        const path = "A[0]";
+        const expected = "B";
         const result = getByPath(data, path);
-        expect(result).toEqual(expectedResult);
+        expect(result).toEqual(expected);
+    });
+
+    describe("common", () => {
+        it.each(testCases)("path = \"%s\"", (path, data, expected) => {
+            const result = getByPath(data, path);
+            expect(result).toEqual(expected);
+        });
     });
 });

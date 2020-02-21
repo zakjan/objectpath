@@ -6,19 +6,49 @@ Expression language for querying JSON objects, based on formal ANTLR4 grammar. I
 
 ### JavaScript
 
+#### Install
+
 ```
 npm install @zakjan/objectpath
 ```
 
+#### Use
+
 ```
 import { getByPath } from '@zakjan/objectpath';
 
-const result = getByPath(object, path);
+const data = { A: ["B"] };
+const path = "A[0]";
+const result = getByPath(data, path);
 ```
 
 ### Java
 
-TODO
+#### Install
+
+Add to `pom.xml`:
+
+```
+<dependency>
+  <groupId>cz.zakjan</groupId>
+  <artifactId>objectpath</artifactId>
+  <version>x.y.z</version>
+</dependency>
+```
+
+#### Use
+
+```
+import static cz.zakjan.objectpath.GetByPath.getByPath;
+
+Object data = new HashMap<String, List<String>>() {{
+    put("A", new ArrayList<String>() {{
+        add("B");
+    }});
+}};
+String path = "A[0]";
+Object result = getByPath(data, path);
+```
 
 ## Syntax
 

@@ -1,4 +1,4 @@
-// Generated from ../grammar/ObjectPath.g4 by ANTLR 4.7.3-SNAPSHOT
+// Generated from grammar/ObjectPath.g4 by ANTLR 4.7.3-SNAPSHOT
 
 
 import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";

@@ -2,7 +2,7 @@ import { getByPath } from "./GetByPath";
 import * as fs from "fs";
 
 describe("getByPath", () => {
-    const TEST_COMMON_PATH = "../test";
+    const TEST_COMMON_PATH = "test";
 
     const testCases = fs.readdirSync(TEST_COMMON_PATH).flatMap(file => {
         const json = fs.readFileSync(`${TEST_COMMON_PATH}/${file}`, "utf8");

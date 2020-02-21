@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -eu
 
-SOURCE_DIR="../grammar"
+SOURCE_DIR="grammar"
 TARGET_DIR="src/main/java/cz/zakjan/objectpath/parser"
 TARGET_PACKAGE="cz.zakjan.objectpath.parser"
 

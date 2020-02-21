@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GetByPathTest {
-    private static final String TEST_COMMON_PATH = "../test";
+    private static final String TEST_COMMON_PATH = "test";
 
     public static List<Object[]> testCases() {
         ObjectMapper objectMapper = new ObjectMapper();

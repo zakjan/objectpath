@@ -4,7 +4,7 @@
   <groupId>cz.zakjan</groupId>
   <artifactId>objectpath</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <description>Expression language for querying JSON objects, based on formal ANTLR4 grammar</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

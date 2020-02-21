@@ -1,3 +1,3 @@
 #!/usr/bin/env bash -eu
 
-npm publish --access=publi
+npm publish --access=public

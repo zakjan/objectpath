@@ -1,4 +1,4 @@
-# gget
+# objectpath
 
 Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TS, Java
 
@@ -109,7 +109,7 @@ ANTLR4 grammar is used to formally describe the syntax and to generate string-to
 **Directories**
 
 - `grammar` - ANTLR4 grammar
-- `gget-*` - language-specific implementation, with directory structure and package definition following langauage standards
+- `objectpath-*` - language-specific implementation, with directory structure and package definition following langauage standards
   - `parser` - generated ANTLR4 string-to-AST parser
   - `visitor` - AST visitor and custom visitor functions
   - `GetByPath.*` - entry point to the library, contains main function `getByPath`
@@ -119,8 +119,8 @@ ANTLR4 grammar is used to formally describe the syntax and to generate string-to
 
 Dependencies for each language-specific implementation are managed by their respective package manager tools.
 
-- `gget-ts` - npm
-- `gget-java` - Maven
+- `objectpath-ts` - npm
+- `objectpath-java` - Maven
 
 *(optional)* For direct CLI access to ANTLR4 compiler, download [Complete ANTLR Java binaries jar (antlr-4.7.2-complete.jar)](http://www.antlr.org/download.html). Useful aliases:
 
@@ -138,7 +138,7 @@ For visualizing AST, ANTLR IntelliJ plugin is recommended. Open `grammar/ObjectP
 ![ANTLR IntelliJ plugin - start](docs/antlr-intellij-plugin-start.png)
 ![ANTLR IntelliJ plugin - result](docs/antlr-intellij-plugin-result.png)
 
-*The other option is `grun` tool. But it doesn't support grammar file and compiled Java files in separate directories, you'd need to disable `-package` option and output the parser to the same directory with grammar in `gget-java/generate-parser.sh`.*
+*The other option is `grun` tool. But it doesn't support grammar file and compiled Java files in separate directories, you'd need to disable `-package` option and output the parser to the same directory with grammar in `objectpath-java/generate-parser.sh`.*
 
 **Updating AST visitor**
 

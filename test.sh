@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -eu
 
 for LANG in ts java; do
-    DIR="gget-$LANG"
+    DIR="objectpath-$LANG"
 
     echo "Running $DIR tests"
 

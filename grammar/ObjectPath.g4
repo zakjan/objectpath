@@ -6,9 +6,9 @@ start : expression? EOF ;
 
 expression : '(' expression ')' # Parentheses
 
+           // access expressions
            | '$' # RootObject
            | '@' # CurrentObject
-
            | IDENTIFIER # DotAccess // shorthand for expr1 = @
            | expr1=expression '.' IDENTIFIER # DotAccess
            | '[' expr2=expression ']' # BracketAccess // shorthand for expr1 = @
@@ -18,7 +18,10 @@ expression : '(' expression ')' # Parentheses
            | 'map(' expr2=expression ')' # ArrayMap // shorthand for expr1 = @
            | expr1=expression '.' 'map(' expr2=expression ')' # ArrayMap
 
-           // operators (by priority)
+           // functions
+           | IDENTIFIER '(' ((expression ',')* expression)? ')' # Function
+
+           // operators
            | op=('+'|'-') expression # Unary
            | '!' expression # UnaryLogicalNot
            | expression op=('*'|'/') expression # Multiplicative
@@ -29,9 +32,6 @@ expression : '(' expression ')' # Parentheses
            | expression '&&' expression # LogicalAnd
            | expression '||' expression # LogicalOr
            | <assoc=right> expression '?' expression ':' expression # Conditional
-
-           // functions
-           | IDENTIFIER '(' ((expression ',')* expression)? ')' # Function
 
            // primitives
            | STRING # String

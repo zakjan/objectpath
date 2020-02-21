@@ -10,6 +10,7 @@ import { DotAccessContext } from "./ObjectPathParser";
 import { BracketAccessContext } from "./ObjectPathParser";
 import { ArrayFilterContext } from "./ObjectPathParser";
 import { ArrayMapContext } from "./ObjectPathParser";
+import { FunctionContext } from "./ObjectPathParser";
 import { UnaryContext } from "./ObjectPathParser";
 import { UnaryLogicalNotContext } from "./ObjectPathParser";
 import { MultiplicativeContext } from "./ObjectPathParser";
@@ -20,7 +21,6 @@ import { NullishCoalescingContext } from "./ObjectPathParser";
 import { LogicalAndContext } from "./ObjectPathParser";
 import { LogicalOrContext } from "./ObjectPathParser";
 import { ConditionalContext } from "./ObjectPathParser";
-import { FunctionContext } from "./ObjectPathParser";
 import { StringContext } from "./ObjectPathParser";
 import { NumberContext } from "./ObjectPathParser";
 import { BooleanContext } from "./ObjectPathParser";
@@ -92,6 +92,14 @@ export interface ObjectPathVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitArrayMap?: (ctx: ArrayMapContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `Function`
+	 * labeled alternative in `ObjectPathParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitFunction?: (ctx: FunctionContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `Unary`
@@ -172,14 +180,6 @@ export interface ObjectPathVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitConditional?: (ctx: ConditionalContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by the `Function`
-	 * labeled alternative in `ObjectPathParser.expression`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitFunction?: (ctx: FunctionContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `String`

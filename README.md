@@ -6,18 +6,11 @@ Expression language for querying JSON objects, based on formal ANTLR4 grammar. I
 
 The basic syntax is compatible with [lodash.get](https://lodash.com/docs#get). A simple syntax for simple cases, yet supporting more complex cases.
 
-Supported features:
+Supported features (by priority):
 
-- root / current object references
-  - root object - `$`
-  - current object - `@`
-    - leading object reference can be omitted, defaults to current object `@`<br>
-      `field`<br>
-      `[0]`<br>
-      `['a field']`<br>
-      `filter(field == 'X')`<br>
-      `map(field)`
 - access expressions
+  - root object reference `$`
+  - current object reference `@` - default, can be omitted
   - dot access<br>
     `object.field`
   - bracket access<br>
@@ -31,23 +24,23 @@ Supported features:
   - array map<br>
     `array.map(field)`<br>
     `array.map(@ * 2)`
-- operators (by priority)
-  - unary - `+` `-`
-  - unary logical NOT - `!`
-  - multiplicative - `*` `/`
-  - additive - `+` `-`
-  - equality - `==` `!=`
-  - relational - `<` `>` `<=` `>=`
-  - logical AND - `&&`
-  - logical OR - `||`
-  - conditional - `?:`
-- custom functions<br>
-  `join`<br>
-  `split`<br>
-  `sum`<br>
-  `dateTimestampToIsoString` (returns date ISO string `YYYY-MM-DD'T'HH:mm:ss.SSSX`)<br>
-  `dateIsoStringToTimestamp` (accepts any valid date ISO string)
-- primitives - string, number, boolean, null
+- functions
+  - `join`
+  - `split`
+  - `sum`
+  - `dateTimestampToIsoString` - returns date ISO string `YYYY-MM-DD'T'HH:mm:ss.SSSX`
+  - `dateIsoStringToTimestamp` - accepts any valid date ISO string
+- operators
+  - unary `+` `-`
+  - unary logical NOT `!`
+  - multiplicative `*` `/`
+  - additive `+` `-`
+  - equality `==` `!=`
+  - relational `<` `>` `<=` `>=`
+  - logical AND `&&`
+  - logical OR `||`
+  - conditional `?:`
+- primitives - string, number, boolean, `null`
 
 Logical operators coerce left operand to boolean, e.g. `falseField || trueField` returns `trueField`. Note this is different from nullish coalescing operator, which applies if left side evaluates to `null` only, not other falsey values.
 
@@ -81,7 +74,7 @@ Other libraries are either missing more advanced extracting features or don't ha
 
 - *(blocker)* doesn't use array filter result as context for further traversing, see https://github.com/json-path/JsonPath/issues/272
 - *(blocker)* language-specific implementations are completely separate, they differ slightly in edge cases and path preprocessing is needed to make it behave consistently
-- requires root reference `$.` in begining
+- requires root object reference `$` in begining
 
 **XPath**
 
@@ -144,5 +137,8 @@ When updating AST visitor (`GetByPath.*`, `GetByPathVisitor.*`, `GetByPathVisito
 
 ## TODO
 
-- array slicing
+- array slicing `[start:end:step]`
+- computed member access `object[path]`
+- short circuiting - don't evaluate right side of operators if left side is enough
+- complete operator precedence table - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence), [Java](https://introcs.cs.princeton.edu/java/11precedence/)
 - explore if also AST visitor can be generated from an universal language

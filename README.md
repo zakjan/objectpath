@@ -30,9 +30,9 @@ Add to `pom.xml`:
 
 ```
 <dependency>
-  <groupId>cz.zakjan</groupId>
-  <artifactId>objectpath</artifactId>
-  <version>x.y.z</version>
+    <groupId>cz.zakjan</groupId>
+    <artifactId>objectpath</artifactId>
+    <version>x.y.z</version>
 </dependency>
 ```
 
@@ -92,10 +92,6 @@ Supported features (by priority):
 
 See detailed examples in [test](test) directory.
 
-**Parsing errors**
-
-In case of parsing errors, function `getByPath` silently catches the error and returns `null`. If you wish to handle the error on your own, call `parsePath` and `getByParsedPath` separately.
-
 **Strict equality**
 
 Equality operator `==` uses strict equality, `===` in JS, `Object.equals` in Java.
@@ -118,6 +114,10 @@ Some programming languages have optional chaining operator `?.`. This is the def
 
 In case of non-existing property, `null` is returned. This is because `undefined` is a JS-only construct, it even can't be stored in JSON.
 
+**Parsing errors**
+
+In case of parsing errors, function `getByPath` silently catches the error and returns `null`. If you wish to handle the error on your own, call `parsePath` and `getByParsedPath` separately.
+
 ## Why yet another library?
 
 Other libraries are either missing more advanced extracting features or don't have consistent implementation across multiple languages.
@@ -137,55 +137,13 @@ Other libraries are either missing more advanced extracting features or don't ha
 
 - language-specific implementations are completely separate
 
-**lodash.get, JSONata, JSPath, dot-prop**
-
-- missing more advanced features
-
 **jq**
 
 - only C implementation
 
-## Development
+**lodash.get, JSONata, JSPath, dot-prop, ...**
 
-ANTLR4 grammar is used to formally describe the syntax and to generate string-to-AST parser. AST visitor is written manually, but in a consistent code style across languages. This is to enable easy porting into new target language.
-
-**Directories**
-
-- `grammar` - ANTLR4 grammar
-- `objectpath-*` - language-specific implementation, with directory structure and package definition following langauage standards
-  - `parser` - generated ANTLR4 string-to-AST parser
-  - `visitor` - AST visitor and custom visitor functions
-  - `GetByPath.*` - entry point to the library, contains main function `getByPath`
-- `test` - test usecases
-
-**Dependencies**
-
-Dependencies for each language-specific implementation are managed by their respective package manager tools.
-
-- `objectpath-ts` - npm
-- `objectpath-java` - Maven
-
-*(optional)* For direct CLI access to ANTLR4 compiler, download [Complete ANTLR Java binaries jar (antlr-4.7.2-complete.jar)](http://www.antlr.org/download.html). Useful aliases:
-
-```
-alias antlr4='java -cp ".:/usr/local/lib/antlr-4.7.2-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
-alias grun='java -cp ".:/usr/local/lib/antlr-4.7.2-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
-```
-
-**Updating ANTLR4 grammar, parser**
-
-When updating ANTLR4 grammar, run `./generate-parser.sh` to generate parsers in all target languages. **Don't edit parsers manually!** Then update AST visitors in each language respectively.
-
-For visualizing AST, ANTLR IntelliJ plugin is recommended. Open `grammar/ObjectPath.g4`, right-click `start` rule, select "Test ANTLR rule", enter the input string into the left window, observe parse tree in the right window.
-
-![ANTLR IntelliJ plugin - start](docs/antlr-intellij-plugin-start.png)
-![ANTLR IntelliJ plugin - result](docs/antlr-intellij-plugin-result.png)
-
-*The other option is `grun` tool. But it doesn't support grammar file and compiled Java files in separate directories, you'd need to disable `-package` option and output the parser to the same directory with grammar in `objectpath-java/generate-parser.sh`.*
-
-**Updating AST visitor**
-
-When updating AST visitor (`GetByPath.*`, `GetByPathVisitor.*`, `GetByPathVisitorFunctions.*`), keep them as close as possible in all languages. Although this might lead to code that is not idiomatic to the given language, it allows straightforward porting of new features.
+- missing more advanced features
 
 ## TODO
 

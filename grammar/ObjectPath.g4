@@ -25,6 +25,7 @@ expression : '(' expression ')' # Parentheses
            | expression op=('+'|'-') expression # Additive
            | expression op=('<'|'>'|'<='|'>=') expression # Relational
            | expression op=('=='|'!=') expression # Equality
+           | expression '??' expression # NullishCoalescing
            | expression '&&' expression # LogicalAnd
            | expression '||' expression # LogicalOr
            | <assoc=right> expression '?' expression ':' expression # Conditional

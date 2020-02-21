@@ -49,7 +49,7 @@ Supported features:
   `dateIsoStringToTimestamp` (accepts any valid date ISO string)
 - primitives - string, number, boolean, null
 
-Logical operators can be used with operands that are not boolean values: `falseField || trueField` returns `trueField`
+Logical operators coerce left operand to boolean, e.g. `falseField || trueField` returns `trueField`. Note this is different from nullish coalescing operator, which applies if left side evaluates to `null` only, not other falsey values.
 
 See detailed examples in [test](test) directory.
 

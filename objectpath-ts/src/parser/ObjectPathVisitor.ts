@@ -16,6 +16,7 @@ import { MultiplicativeContext } from "./ObjectPathParser";
 import { AdditiveContext } from "./ObjectPathParser";
 import { RelationalContext } from "./ObjectPathParser";
 import { EqualityContext } from "./ObjectPathParser";
+import { NullishCoalescingContext } from "./ObjectPathParser";
 import { LogicalAndContext } from "./ObjectPathParser";
 import { LogicalOrContext } from "./ObjectPathParser";
 import { ConditionalContext } from "./ObjectPathParser";
@@ -139,6 +140,14 @@ export interface ObjectPathVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitEquality?: (ctx: EqualityContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `NullishCoalescing`
+	 * labeled alternative in `ObjectPathParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitNullishCoalescing?: (ctx: NullishCoalescingContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `LogicalAnd`

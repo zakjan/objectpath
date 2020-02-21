@@ -44,6 +44,8 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             return this.evaluateRelational(data, ctx);
         } else if (ctx instanceof ObjectPathParser.EqualityContext) {
             return this.evaluateEquality(data, ctx);
+        } else if (ctx instanceof ObjectPathParser.NullishCoalescingContext) {
+            return this.evaluateNullishCoalescing(data, ctx);
         } else if (ctx instanceof ObjectPathParser.LogicalAndContext) {
             return this.evaluateLogicalAnd(data, ctx);
         } else if (ctx instanceof ObjectPathParser.LogicalOrContext) {
@@ -223,6 +225,13 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             /* istanbul ignore next */
             throw new Error("Illegal state");
         }
+    }
+
+    private evaluateNullishCoalescing(data: unknown, ctx: ObjectPathParser.NullishCoalescingContext): unknown {
+        const left = this.evaluateExpression(data, ctx.expression()[0]);
+        const right = this.evaluateExpression(data, ctx.expression()[1]);
+
+        return left === null ? right : left;
     }
 
     private evaluateLogicalAnd(data: unknown, ctx: ObjectPathParser.LogicalAndContext): unknown {

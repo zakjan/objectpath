@@ -3,10 +3,10 @@
 for LANG in ts java; do
     DIR="objectpath-$LANG"
 
-    echo "Running tests $DIR"
+    echo "Publishing $DIR"
 
     cd "$DIR"
-    ./test.sh
+    ./publish.sh
     cd - > /dev/null
 
     echo

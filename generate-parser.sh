@@ -3,7 +3,7 @@
 for LANG in ts java; do
     DIR="objectpath-$LANG"
 
-    echo "Generating $DIR parser"
+    echo "Generating parser $DIR"
 
     cd "$DIR"
     ./generate-parser.sh

@@ -1,6 +1,14 @@
 # objectpath
 
-Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TS, Java
+Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language. Test usecases are shared to ensure consistent results. Currently implemented in TypeScript, Java
+
+## Usage
+
+### JavaScript
+
+```
+npm install @zakjan/objectpath`
+```
 
 ## Syntax
 

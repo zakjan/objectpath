@@ -1,6 +1,6 @@
 {
   "name": "@zakjan/objectpath",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Expression language for querying JSON objects, based on formal ANTLR4 grammar",
   "license": "MIT",
   "author": "Jan Zak <zj@zakjan.cz>",

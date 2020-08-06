@@ -73,6 +73,8 @@ Supported features (by priority):
     `array.map(field)`<br>
     `array.map(@ * 2)`
 - functions
+  - `toString`
+  - `toNumber`
   - `join`
   - `split`
   - `sum`
@@ -147,6 +149,7 @@ Other libraries are either missing more advanced extracting features or don't ha
 
 ## TODO
 
+- floating point primitives and operations
 - array slicing `array[start:end:step]`
 - computed member access `object[path]`
 - short circuiting - don't evaluate right side of operators if left side is enough

@@ -27,9 +27,12 @@ public class GetByPathTest {
                 try {
                     String json = new String(Files.readAllBytes(file));
                     Map<String, Object> fixture = objectMapper.readValue(json, new TypeReference<Map<String, Object>>(){});
-                    return ((List<List<Object>>)fixture.get("testCases")).stream().map(testCase ->
-                            new Object[] { testCase.get(0), fixture.get("data"), testCase.get(1) }
-                    );
+                    return ((List<List<Object>>)fixture.get("testCases")).stream().map(testCase -> {
+                        Object path = testCase.get(0);
+                        Object data = fixture.get("data");
+                        Object expected = testCase.get(1);
+                        return new Object[] { path, data, expected };
+                    });
                 } catch (IOException e) {
                     throw new UncheckedIOException(e);
                 }

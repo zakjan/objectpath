@@ -1,5 +1,7 @@
 export class GetByPathVisitorFunctions {
     private static nameToFunction = new Map([
+        ["toString", GetByPathVisitorFunctions.toStringFunction],
+        ["toNumber", GetByPathVisitorFunctions.toNumberFunction],
         ["join", GetByPathVisitorFunctions.joinFunction],
         ["split", GetByPathVisitorFunctions.splitFunction],
         ["sum", GetByPathVisitorFunctions.sumFunction],
@@ -15,6 +17,28 @@ export class GetByPathVisitorFunctions {
         }
 
         return func(args);
+    }
+
+    private static toStringFunction(args: unknown[]): unknown {
+        /* istanbul ignore if */
+        if (args.length !== 1) {
+            return null;
+        }
+
+        const value = args[0];
+        const result = `${value}`;
+        return result;
+    }
+
+    private static toNumberFunction(args: unknown[]): unknown {
+        /* istanbul ignore if */
+        if (args.length !== 1) {
+            return null;
+        }
+
+        const value = args[0];
+        const result = parseInt(`${value}`, 10);
+        return result;
     }
 
     private static joinFunction(args: unknown[]): unknown {

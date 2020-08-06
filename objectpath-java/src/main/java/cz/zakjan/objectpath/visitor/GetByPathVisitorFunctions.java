@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 public class GetByPathVisitorFunctions {
     private static Map<String, Function<List<Object>, Object>> nameToFunction = new HashMap<String, Function<List<Object>, Object>>() {{
+        put("toString", GetByPathVisitorFunctions::toStringFunction);
+        put("toNumber", GetByPathVisitorFunctions::toNumberFunction);
         put("join", GetByPathVisitorFunctions::joinFunction);
         put("split", GetByPathVisitorFunctions::splitFunction);
         put("sum", GetByPathVisitorFunctions::sumFunction);
@@ -28,6 +30,35 @@ public class GetByPathVisitorFunctions {
         }
 
         return func.apply(args);
+    }
+
+    public static Object toStringFunction(List<Object> args) {
+        if (args.size() != 1) {
+            return null;
+        }
+
+        Object value = args.get(0);
+        String result = String.valueOf(value);
+        return result;
+    }
+
+    private static Object toNumberFunction(List<Object> args) {
+        if (args.size() != 1) {
+            return null;
+        }
+
+        Object value = args.get(0);
+        Object result;
+        if (!(value instanceof Integer || value instanceof Long)) {
+            try {
+                result = Integer.parseInt(String.valueOf(value));
+            } catch (NumberFormatException e) {
+                result = Long.parseLong(String.valueOf(value));
+            }
+        } else {
+            result = value;
+        }
+        return result;
     }
 
     private static Object joinFunction(List<Object> args) {

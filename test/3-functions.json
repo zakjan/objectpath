@@ -1,17 +1,24 @@
 {
     "data": {
         "strings": ["1", "2", "3"],
-        "numbers": [1, 2, 3]
+        "numbers": [1, 2, 3],
+        "items": [
+            {"string": "1", "number": 1},
+            {"string": "2", "number": 2},
+            {"string": "3", "number": 3}
+        ]
     },
     "testCases": [
         ["toString(numbers[0])", "1"],
         ["toNumber(strings[0])", 1],
         ["join(strings, ' ')", "1 2 3"],
         ["join(numbers.map(toString(@)), ' ')", "1 2 3"],
+        ["join(items.map(toString(number)), ' ')", "1 2 3"],
         ["split('1 2 3', ' ')", ["1", "2", "3"]],
         ["split('1 2 3', ' ')[0]", "1"],
         ["sum(numbers)", 6],
         ["sum(strings.map(toNumber(@)))", 6],
+        ["sum(items.map(toNumber(string)))", 6],
         ["dateTimestampToIsoString(1546344000000)", "2019-01-01T12:00:00.000Z"],
         ["dateTimestampToIsoString(toNumber('1546344000000'))", "2019-01-01T12:00:00.000Z"],
         ["dateIsoStringToTimestamp('2019-01-01T12:00:00Z')", 1546344000000],

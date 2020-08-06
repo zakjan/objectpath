@@ -49,14 +49,10 @@ public class GetByPathVisitorFunctions {
 
         Object value = args.get(0);
         Object result;
-        if (!(value instanceof Integer || value instanceof Long)) {
-            try {
-                result = Integer.parseInt(String.valueOf(value));
-            } catch (NumberFormatException e) {
-                result = Long.parseLong(String.valueOf(value));
-            }
-        } else {
-            result = value;
+        try {
+            result = Integer.parseInt(String.valueOf(value));
+        } catch (NumberFormatException e) {
+            result = Long.parseLong(String.valueOf(value));
         }
         return result;
     }

@@ -34,6 +34,8 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
             return this.evaluateDotAccess(data, (ObjectPathParser.DotAccessContext)ctx);
         } else if (ctx instanceof ObjectPathParser.BracketAccessContext) {
             return this.evaluateBracketAccess(data, (ObjectPathParser.BracketAccessContext)ctx);
+        } else if (ctx instanceof ObjectPathParser.ArrayFindContext) {
+            return this.evaluateArrayFind(data, (ObjectPathParser.ArrayFindContext)ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayFilterContext) {
             return this.evaluateArrayFilter(data, (ObjectPathParser.ArrayFilterContext)ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayMapContext) {
@@ -106,6 +108,17 @@ public class GetByPathVisitor extends ObjectPathBaseVisitor<Object> {
             if (normalizedIndex >= 0 && normalizedIndex < ((List<Object>)value).size()) {
                 return ((List<Object>)value).get(normalizedIndex);
             }
+        }
+        return null;
+    }
+
+    private Object evaluateArrayFind(Object data, ObjectPathParser.ArrayFindContext ctx) {
+        Object value = ctx.expr1 != null ? this.evaluateExpression(data, ctx.expr1) : data;
+
+        if (value instanceof List) {
+            return ((List<Object>)value).stream().filter(item -> {
+                return this.toBoolean(this.evaluateExpression(item, ctx.expr2));
+            }).findFirst().get();
         }
         return null;
     }

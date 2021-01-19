@@ -26,6 +26,8 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             return this.evaluateDotAccess(data, ctx);
         } else if (ctx instanceof ObjectPathParser.BracketAccessContext) {
             return this.evaluateBracketAccess(data, ctx);
+        } else if (ctx instanceof ObjectPathParser.ArrayFindContext) {
+            return this.evaluateArrayFind(data, ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayFilterContext) {
             return this.evaluateArrayFilter(data, ctx);
         } else if (ctx instanceof ObjectPathParser.ArrayMapContext) {
@@ -99,6 +101,17 @@ export class GetByPathVisitor extends ObjectPathBaseVisitor<unknown> {
             if (normalizedIndex >= 0 && normalizedIndex < value.length) {
                 return value[normalizedIndex];
             }
+        }
+        return null;
+    }
+
+    private evaluateArrayFind(data: unknown, ctx: ObjectPathParser.ArrayFindContext): unknown {
+        const value = ctx._expr1 ? this.evaluateExpression(data, ctx._expr1) : data;
+
+        if (Array.isArray(value)) {
+            return value.find(item => {
+                return this.toBoolean(this.evaluateExpression(item, ctx._expr2));
+            });
         }
         return null;
     }

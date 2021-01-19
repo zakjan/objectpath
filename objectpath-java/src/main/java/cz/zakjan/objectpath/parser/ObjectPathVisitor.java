@@ -108,6 +108,13 @@ public interface ObjectPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLogicalOr(ObjectPathParser.LogicalOrContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ArrayFind}
+	 * labeled alternative in {@link ObjectPathParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayFind(ObjectPathParser.ArrayFindContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Function}
 	 * labeled alternative in {@link ObjectPathParser#expression}.
 	 * @param ctx the parse tree

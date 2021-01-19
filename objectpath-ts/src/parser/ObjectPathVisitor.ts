@@ -9,6 +9,7 @@ import { CurrentObjectContext } from "./ObjectPathParser";
 import { DotAccessContext } from "./ObjectPathParser";
 import { BracketAccessContext } from "./ObjectPathParser";
 import { ArrayFilterContext } from "./ObjectPathParser";
+import { ArrayFindContext } from "./ObjectPathParser";
 import { ArrayMapContext } from "./ObjectPathParser";
 import { FunctionContext } from "./ObjectPathParser";
 import { UnaryContext } from "./ObjectPathParser";
@@ -84,6 +85,14 @@ export interface ObjectPathVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitArrayFilter?: (ctx: ArrayFilterContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `ArrayFind`
+	 * labeled alternative in `ObjectPathParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitArrayFind?: (ctx: ArrayFindContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `ArrayMap`

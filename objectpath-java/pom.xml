@@ -6,7 +6,7 @@
   <version>1.0.2</version>
   <packaging>jar</packaging>
   <name>objectpath</name>
-  <description>Expression language for querying JSON objects, based on formal ANTLR4 grammar</description>
+  <description>Expression language for querying JSON objects using ANTLR4</description>
   <url>https://github.com/zakjan/objectpath</url>
   <licenses>
     <license>

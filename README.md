@@ -1,6 +1,8 @@
 # ObjectPath
 
-Expression language for querying JSON objects, based on formal ANTLR4 grammar. It can be easily ported into any target language supported as ANTLR4 runtime. Test usecases are shared to ensure consistent results. Currently implemented in TypeScript, Java.
+Expression language for querying JSON objects using ANTLR4. It can be easily ported into any target language supported as ANTLR4 runtime. Test usecases are shared to ensure consistent results. Currently implemented in TypeScript, Java.
+
+<img src="docs/screenshot@2x.png" alt="Screenshot" width="640" height="320">
 
 ## Usage
 
@@ -14,12 +16,12 @@ npm install @zakjan/objectpath
 
 #### Use
 
-```
+```ts
 import { getByPath } from '@zakjan/objectpath';
 
-const data = { A: ["B"] };
-const path = "A[0]";
-const result = getByPath(data, path);
+const data = { items: [{ type: "X", name: "Ben" }] };
+const path = "items.find(type == 'X').name";
+const result = getByPath(data, path); // -> Ben
 ```
 
 ### Java
@@ -28,7 +30,7 @@ const result = getByPath(data, path);
 
 Add to `pom.xml`:
 
-```
+```xml
 <dependency>
     <groupId>cz.zakjan</groupId>
     <artifactId>objectpath</artifactId>
@@ -38,16 +40,19 @@ Add to `pom.xml`:
 
 #### Use
 
-```
+```java
 import static cz.zakjan.objectpath.GetByPath.getByPath;
 
-Object data = new HashMap<String, List<String>>() {{
-    put("A", new ArrayList<String>() {{
-        add("B");
+Object data = new HashMap<String, Object>() {{
+    put("items", new ArrayList<Object>() {{
+        add(new HashMap<String, Object>() {{
+            put("type", "X");
+            put("type", "Ben");
+        }});
     }});
 }};
-String path = "A[0]";
-Object result = getByPath(data, path);
+String path = "items.find(type == 'X').name";
+Object result = getByPath(data, path); // -> Ben
 ```
 
 ## Syntax
@@ -65,6 +70,9 @@ Supported features (by priority):
     `array[0]`<br>
     `array[-1]`<br>
     `object['a field']`
+  - array find<br>
+    `array.find(field == 'X')`<br>
+    `array.find($.rootField == 'X')`
   - array filter<br>
     `array.filter(field == 'X')`<br>
     `array.filter($.rootField == 'X')`<br>

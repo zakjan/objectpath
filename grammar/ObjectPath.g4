@@ -13,6 +13,8 @@ expression : '(' expression ')' # Parentheses
            | expr1=expression '.' IDENTIFIER # DotAccess
            | '[' expr2=expression ']' # BracketAccess // shorthand for expr1 = @
            | expr1=expression '[' expr2=expression ']' # BracketAccess
+           | 'find(' expr2=expression ')' # ArrayFilter // shorthand for expr1 = @
+           | expr1=expression '.' 'find(' expr2=expression ')' # ArrayFind
            | 'filter(' expr2=expression ')' # ArrayFilter // shorthand for expr1 = @
            | expr1=expression '.' 'filter(' expr2=expression ')' # ArrayFilter
            | 'map(' expr2=expression ')' # ArrayMap // shorthand for expr1 = @
